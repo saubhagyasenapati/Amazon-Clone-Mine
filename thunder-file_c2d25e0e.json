@@ -1,0 +1,16 @@
+{
+  "success": true,
+  "user": {
+    "avatar": {
+      "public_id": "this is a sample id",
+      "url": "profilepicURl"
+    },
+    "_id": "63ac635e44636e66ac228d87",
+    "name": "Saubhagya1",
+    "email": "saubhagya.sena1@gmail.com",
+    "password": "password",
+    "role": "user",
+    "__v": 0
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYWM2MzVlNDQ2MzZlNjZhYzIyOGQ4NyIsImlhdCI6MTY3MjI1MzU4MCwiZXhwIjoxNjcyNjg1NTgwfQ.CF9DOPhFeVBZF3A3O2MP9UFn-1j0aBbrNsA97zfklaY"
+}
