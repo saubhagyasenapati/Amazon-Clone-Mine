@@ -13,9 +13,9 @@ function Home() {
   const { loading, error, products, productCount } = useSelector(
     (state) => state.products
   );
-
+  const keyword = "", currentPage = 1, price=[0,50000], category="", rating=[0,5]
   useEffect(() => {
-    dispatch(getProduct());
+    dispatch(getProduct(keyword,currentPage,price,category,rating));
     if(error){
       toast(error, {
         position: "bottom-center",

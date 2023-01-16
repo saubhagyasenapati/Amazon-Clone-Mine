@@ -21,12 +21,14 @@ exports.getAllProducts = catchAsyncErrors(async (req, res) => {
   const apiFeature = new ApiFeatures(Product.find(), req.query)
     .search()
     .filter()
-    .pagination(resultPerPage);
+    .pagination(resultPerPage)
   const products = await apiFeature.query;
+
   res.status(200).json({
     success: true,
     products,
-    productCount
+    productCount,
+    resultPerPage
   });
 });
 
@@ -46,6 +48,7 @@ exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
     runValidators: true,
     useFindAndModify: false,
   });
+  lo
   res.status(200).json({
     success: true,
     product,

@@ -14,7 +14,7 @@ const options={
   return (
     
     <Section>
-      <Link  to={`/products/${product._id}`} className="product" >
+      <Link  to={`/product/${product._id}`} className="product" >
       <div >
         <img
           src={product.images[0].url}

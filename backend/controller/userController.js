@@ -3,21 +3,28 @@ const catchAsyncErrors=require("../middleware/catchAsyncError");
 const User=require("../Models/userModel");
 const sendToken = require("../utils/jwtToken");
 const sendEmail=require("../utils/sendEmail");
-const crypto =require("crypto")
+const crypto =require("crypto");
+const  cloudinary  = require("../config/cloudinary");
 //Register Our User
 
 exports.registerUser=catchAsyncErrors(async(req,res,next)=>{
     const {name,email,password}=req.body;
-
+    console.log(req.body.avatar);
+    const myCloud=await cloudinary.uploader.upload(req.body.avatar,{
+        folder:"avatars",
+        width:150,
+        crop:"scale",
+    });
+    console.log(myCloud);
     const user=await User.create({
         name,email,password,
         avatar:{
-            public_id:"this is a sample id",
-            url:"profilepicURl"
+            public_id:myCloud.public_id,
+            url:myCloud.secure_url,
         }
     
     })
-
+   
     sendToken(user,201,res)
 })
 
@@ -35,10 +42,11 @@ exports.loginUser=catchAsyncErrors(async(req,res,next)=>{
         return next(new ErrorHandler("Invalid email or password",401))
     }
 
-    const isPasswordMatched=user.comparePassword(password);
+    const isPasswordMatched=await user.comparePassword(password);
     if(!isPasswordMatched){
         return next(new ErrorHandler("Invalid email or password",401))
     }
+
     sendToken(user,200,res)
 })
 
@@ -67,7 +75,6 @@ exports.forgotPassword=catchAsyncErrors(async(req,res,next)=>{
    const resetToken=user.getResetPassswordToken();
    await user.save({validateBeforeSave:false});
    const resetPasswordUrl=`${req.protocol}://${req.get("host")}/api/auth/password/reset/${resetToken}`;
-
    const message=`Your Password reset token is :-\n\n${resetPasswordUrl}\n\n if Not requested Kindly ignore it`;
    console.log(user );
    try{
