@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect ,useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { clearErrors, getProductDetails } from "../actions/productAction";
@@ -9,6 +9,7 @@ import ReviewAdd from "./subcomponents/ReviewAdd";
 import Loader from "./Layout/Loader/Loader";
 import {ToastContainer,toast} from'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import { addItemsToCart } from "../actions/cartActions";
 const ProductDetails = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -32,6 +33,15 @@ const ProductDetails = () => {
   const { products, loading, error } = useSelector(
     (state) => state.productDetails
   );
+  const [value, setValue] = useState();
+
+  const handleChange = (e) => {
+    setValue(e.target.value);
+  };
+  const addToCartHandler=()=>{
+    dispatch(addItemsToCart(id,value))
+  }
+
   const options = {
     edit: false,
     value: products.rating,
@@ -149,17 +159,16 @@ const ProductDetails = () => {
                     <label class="input-group-text" for="inputGroupSelect01">
                       quantity
                     </label>
-                    <select class="form-select" id="inputGroupSelect01">
-                      <option selected>0</option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="3">3</option>
-                      <option value="3">4</option>
-                      <option value="3">5</option>
+                    <select class="form-select" id="inputGroupSelect01" value={value} onChange={handleChange}>
+    
+                      <option selected value="1">1</option>
+                      <option value='2'>2</option>
+                      <option value='3'>3</option>
+                      <option value='4'>4</option>
+                      <option value='5'>5</option>
                     </select>
                   </div>
-                  <button>Add to Cart</button>
+                  <button onClick={addToCartHandler}>Add to Cart</button>
                 </>
               )}
             </div>
@@ -168,7 +177,7 @@ const ProductDetails = () => {
 
           <div className="reviewsHead">
             <div className="addreview">
-              <ReviewAdd />
+              <ReviewAdd id={id} />
             </div>
             <div className="showreview">
               <h3>Top reviews from india</h3>

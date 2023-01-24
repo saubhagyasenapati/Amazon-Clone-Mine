@@ -12,6 +12,12 @@ import React from "react";
 import { useSelector } from "react-redux";
 import NavbarLogin from "./components/NavbarLogin";
 import Profile from "./components/Profile";
+import UpdateProfile from "./components/UpdateProfile";
+import UpdatePassword from "./components/UpdatePassword";
+import Forgotpassword from "./components/Forgotpassword";
+import ResetPassword from "./components/ResetPassword";
+import Cart from "./components/Cart";
+import Shipping from "./components/Shipping";
 
 
 function App() {
@@ -33,6 +39,12 @@ function App() {
           <Route exact path="/Login" element={<LogIn/>}></Route>
           <Route exact path="/Register" element={<SignUp/>}></Route>
           <Route exact path="/account" element={<Profile/>}></Route>
+          <Route exact path="/updateProfile" element={<UpdateProfile/>}></Route>
+          <Route exact path="/password/update" element={<UpdatePassword/>}></Route>
+          <Route exact path="/password/forgot" element={<Forgotpassword/>}></Route>
+          <Route exact path="/password/reset/:token" element={<ResetPassword/>}></Route>
+          <Route exact path="/cart" element={<Cart/>}></Route>
+          <Route exact path="/shipping" element={<Shipping/>}></Route>
         </Routes>
       </Router>
     </>

@@ -1,6 +1,7 @@
 import React,{Fragment,useEffect} from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
+import styled from 'styled-components'
 import Loader from './Layout/Loader/Loader'
 import MetaData from './Layout/MetaData'
 
@@ -8,24 +9,32 @@ const Profile = () => {
   const {user,loading,isAuthenticated}=useSelector(state=>state.user);
   const navigate=useNavigate();
   useEffect(() => {
-    if(isAuthenticated==false){
+    if(isAuthenticated===false){
       navigate("/login");
     }
   
   }, [isAuthenticated])
   
   return (
+
     <Fragment>
    {loading?<Loader/>:(
-    <Fragment>
+    <Section>
     <MetaData title={`${user.name}'s Profile`}/>
+    <div className='profileheading'>
+     <h1>My Profile</h1>
+    </div>
     <div className="profileContainer">
+    <div className='profileimage'>
+    <div>
+    <img src={user.avatar.url} alt={user.name} />
+    </div>
+     <div>
+      <button className='amazonbutton'><Link className='link' to="/updateProfile">Edit Profile</Link></button>
+     </div>
+   
+    </div>
       <div>
-        <h1>My Profile</h1>
-        <img src={user.avatar.url} alt={user.name} />
-        <Link to="/me/update">Edit Profile</Link>
-
-      </div>
       <div>
         <h4>Full Name</h4>
         <p>{user.name}</p>
@@ -39,11 +48,19 @@ const Profile = () => {
         <p>{String(user.createdAt).substring(0,10)}</p>
       </div>
       <div>
-        <Link to="/orders">My Orders</Link>
-        <Link to="/password/update">Change Password</Link>
+        <div>
+          <button className='amazonbutton'><Link className='link' to="/orders">My Orders</Link></button>
+        
+        </div>
+        <div>
+          <button className='amazonbutton'><Link className='link' to="/password/update">Change Password</Link></button>
+        </div>
+       
       </div>
+      </div>
+    
     </div>
-  </Fragment>
+    </Section>
    )}
     </Fragment>
     
@@ -51,3 +68,27 @@ const Profile = () => {
 }
 
 export default Profile
+
+const Section=styled.section` 
+.profileheading{
+  margin:1rem ;
+}
+.profileContainer{
+  display:grid ;
+ grid-template-columns:20% 80% ;
+ .profileimage{
+  margin-left:1rem ;
+ }
+ .amazonbutton{
+  margin: 1rem 0rem ;
+      background-color: #ff9900;
+      border: 1px solid;
+      border-radius: 0.3rem;
+      border-color: #a88734 #9c7e31 #846a29;
+      .link{
+        text-decoration:none ;
+        color:black ;
+      }
+ }
+}
+`

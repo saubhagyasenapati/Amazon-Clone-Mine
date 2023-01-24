@@ -5,7 +5,7 @@ import logo from "../Assets/logo.png";
 import cart from "../Assets/cart.png";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Logout } from "../actions/userActions";
 import {ToastContainer,toast} from'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,6 +14,8 @@ const NavbarLogin = ({user}) => {
     const [keyword, setkeyword] = useState("");
     const dispatch= useDispatch();
     const navigate = useNavigate();
+    
+    const { cartItems } = useSelector((state) => state.cart);
     const searchSubmitHandler = (e) => {
       e.preventDefault();
       if (keyword) {
@@ -24,7 +26,7 @@ const NavbarLogin = ({user}) => {
     };
     const handleLogout=()=>{
        dispatch(Logout());
-       navigate("/login");
+       navigate("/");
         toast("LogOut Successfull", {
           position: "bottom-center",
           autoClose: 10000,
@@ -73,10 +75,13 @@ const NavbarLogin = ({user}) => {
                 <span className="headeroption_linetwo">& Orders</span>
               </div>
             </Link>
-            <Link to="/checkout" className="header_link">
+            <Link to="/cart" className="header_link">
               <div className="header_optionBasket">
                 <img src={cart} alt="cart" className="cart_img" />
-                <span className="basketcount">0</span>
+                <span className="basketcount">{`${cartItems.reduce(
+                (acc, item) => acc + 1,
+                0
+              )}`}</span>
                 <span className="headeroption_lineone">Cart</span>
               </div>
             </Link>

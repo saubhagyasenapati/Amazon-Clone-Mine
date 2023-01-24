@@ -1,21 +1,24 @@
+
 import React, { useState, useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { clearErrors, login } from "../../actions/userActions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Loader from "../Layout/Loader/Loader";
 import styled from "styled-components";
-import logo from "../../Assets/logo2.jpg";
-// import {logo} from '../../Assets/logo.png'
-const LogIn = () => {
-  const navigate = useNavigate();
+import Loader from "./Layout/Loader/Loader";
+
+import { clearErrors, loadUser, register, updatePassword } from "../actions/userActions";
+import { UPDATE_PASSWORD_RESET } from "../constants/userConstant";
+
+const UpdatePassword = () => {
+    const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { error, loading, isAuthenticated } = useSelector(
-    (state) => state.user
+  const { error, loading, isUpdated } = useSelector(
+    (state) => state.profile
   );
-  const [loginEmail, setloginEmail] = useState("");
-  const [loginPassword, setloginPassword] = useState("");
+  const [OldPassword, setOldPassword] = useState("");
+  const [NewPassword, setNewPassword] = useState("");
+  const [ConfirmPassword, setConfirmPassword] = useState("");
   useEffect(() => {
     if (error) {
       toast(error, {
@@ -29,15 +32,34 @@ const LogIn = () => {
         theme: "dark",
       });
       dispatch(clearErrors());
+
     }
-    if (isAuthenticated) {
-      navigate("/account");
-    }
-  }, [dispatch, error, isAuthenticated]);
+    if(isUpdated){
+        toast("Updated Password", {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+          navigate("/account");
+          dispatch({
+            type:UPDATE_PASSWORD_RESET,
+          })
+      }
+ 
+  }, [dispatch, error,isUpdated]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(login(loginEmail, loginPassword));
+    const myForm = new FormData();
+        myForm.set("oldPassword", OldPassword);
+        myForm.set("newPassword", NewPassword);
+        myForm.set("confirmPassword", ConfirmPassword);
+    dispatch(updatePassword(myForm));
     console.log("Submitted");
   };
 
@@ -49,42 +71,40 @@ const LogIn = () => {
           <Loader />
         ) : (
           <div className="login">
-              <div>
-          <img src={logo} alt="" />
-        </div>
+         
         <div className="box">  
             <form onSubmit={(event) => handleSubmit(event)}>
               <div className="signinbox">
-                <h2>Sign In</h2>
-
+                <h2>Update Password</h2>
                 <div className="input">
-                  <h5>Email</h5>
-                  <input
-                    type="email"
-                    required
-                    value={loginEmail}
-                    onChange={(e) => setloginEmail(e.target.value)}
-                    min="3"
-                    size="40"
-                  />
-                </div>
-                <div className="input">
-                  <h5>Password</h5>
+                  <h5>Old Password</h5>
                   <input
                     type="password"
-                    value={loginPassword}
-                    onChange={(e) => setloginPassword(e.target.value)}
-                    size="40"
+                    value={OldPassword}
+                    onChange={(e) => setOldPassword(e.target.value)}
+                    size="30"
                   />
                 </div>
-                <button type="submit">Log In</button>
-                <span>
-                <Link to="/password/forgot">Forgot Password?</Link>
-                </span>
-                 
-                <span>
-                Don't have an account?<Link to="/register">Register</Link>
-              </span>
+                <div className="input">
+                  <h5>New Password</h5>
+                  <input
+                    type="password"
+                    value={NewPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    size="30"
+                  />
+                </div>
+                <div className="input">
+                  <h5>Confirm Password</h5>
+                  <input
+                    type="password"
+                    value={ConfirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    size="30"
+                  />
+                </div>
+                <button type="submit">Update Password</button>
+               
               </div>
 
              
@@ -96,10 +116,11 @@ const LogIn = () => {
         )}
       </Section>
     </Fragment>
-  );
-};
+  )
+}
 
-export default LogIn;
+export default UpdatePassword
+
 
 const Section = styled.section`
   display: flex;
@@ -119,13 +140,13 @@ const Section = styled.section`
    margin:1rem ;
   }
   form{
-    width:80%;
+    width:100%;
     height:100% ;
   }
   .box {
     border: 1px solid;
-    width: 80%;
-    height: 70%;
+    width: 100%;
+    height: 100%;
     border-radius: 1rem;
     padding: 20px;
     border-color: grey;

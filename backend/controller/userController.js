@@ -15,7 +15,7 @@ exports.registerUser=catchAsyncErrors(async(req,res,next)=>{
         width:150,
         crop:"scale",
     });
-    console.log(myCloud);
+   
     const user=await User.create({
         name,email,password,
         avatar:{
@@ -64,7 +64,7 @@ exports.logout=catchAsyncErrors(async(req,res,next)=>{
 })
 
 exports.forgotPassword=catchAsyncErrors(async(req,res,next)=>{
-
+    console.log(req.body.email);
    const user=await User.findOne({email:req.body.email});
    if(!user)
    {
@@ -74,7 +74,7 @@ exports.forgotPassword=catchAsyncErrors(async(req,res,next)=>{
    //Get ResetPasswordToken
    const resetToken=user.getResetPassswordToken();
    await user.save({validateBeforeSave:false});
-   const resetPasswordUrl=`${req.protocol}://${req.get("host")}/api/auth/password/reset/${resetToken}`;
+   const resetPasswordUrl=`${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
    const message=`Your Password reset token is :-\n\n${resetPasswordUrl}\n\n if Not requested Kindly ignore it`;
    console.log(user );
    try{
@@ -100,6 +100,7 @@ exports.forgotPassword=catchAsyncErrors(async(req,res,next)=>{
 
 exports.resetPassword=catchAsyncErrors(async(req,res,next)=>{
     //creating token hash
+    console.log(req.body);
     const resetPasswordToken=crypto.createHash("sha256").update(req.params.token).digest("hex");
 
     const user=await User.findOne({
@@ -132,8 +133,7 @@ exports.getUserDetails=catchAsyncErrors(async(req,res,next)=>{
 
 exports.updatePassword=catchAsyncErrors(async(req,res,next)=>{
     const user=await User.findById(req.user.id).select("+password");
-
-    const isPasswordMatched=user.comparePassword(req.body.oldPassword);
+    const isPasswordMatched=await user.comparePassword(req.body.oldPassword);
     if(!isPasswordMatched){
         return next(new ErrorHandler("Old Password is Incorrect",401))
     }
@@ -157,7 +157,21 @@ exports.updateUserProfile=catchAsyncErrors(async(req,res,next)=>{
     email:req.body.email
   }
   //Cloudnery later
-
+  if(req.body.avatar!=="")
+  {
+    const user=await User.findById(req.user.id);
+    const imageId=user.avatar.public_id;
+    await cloudinary.uploader.destroy(imageId);
+    const myCloud=await cloudinary.uploader.upload(req.body.avatar,{
+        folder:"avatars",
+        width:150,
+        crop:"scale",
+    });
+    newUserData.avatar={
+        public_id:myCloud.public_id,
+        url:myCloud.secure_url,
+    }
+  }
   const user=await User.findByIdAndUpdate(req.user.id,newUserData,{
     new:true,
     runValidators:true,
