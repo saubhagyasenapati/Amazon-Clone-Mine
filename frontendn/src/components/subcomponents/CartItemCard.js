@@ -38,7 +38,7 @@ const CartItemCard = ({item}) => {
     </div>
     </div>
     <div className='productprice'>
-     <h3>₹{item.price*item.quantity}</h3>
+     <h3>₹{item.quantity*item.price}</h3>
     </div>
     
 </Section>

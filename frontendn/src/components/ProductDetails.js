@@ -160,8 +160,8 @@ const ProductDetails = () => {
                       quantity
                     </label>
                     <select class="form-select" id="inputGroupSelect01" value={value} onChange={handleChange}>
-    
-                      <option selected value="1">1</option>
+                    <option selected value="0">0</option>
+                      <option  value="1">1</option>
                       <option value='2'>2</option>
                       <option value='3'>3</option>
                       <option value='4'>4</option>

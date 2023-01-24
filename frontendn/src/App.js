@@ -17,9 +17,7 @@ import UpdatePassword from "./components/UpdatePassword";
 import Forgotpassword from "./components/Forgotpassword";
 import ResetPassword from "./components/ResetPassword";
 import Cart from "./components/Cart";
-import Shipping from "./components/Shipping";
-
-
+import Ship from "./components/Shipping";
 function App() {
   const{isAuthenticated,user}=useSelector((state)=>state.user);
   React.useEffect(()=>{
@@ -32,7 +30,7 @@ function App() {
         {isAuthenticated&&<NavbarLogin user={user}/>}
         {!isAuthenticated&&<Navbar/>}
         <Routes>
-          <Route exact path="/" element={<Home/>}></Route>
+        <Route exact path="/" element={<Home/>}></Route>
           <Route exact path="/product/:id" element={<ProductDetails/>}></Route>
           <Route exact path="/products" element={<Products/>}></Route>
           <Route exact path="/products/:keyword" element={<Products/>}></Route>
@@ -44,7 +42,7 @@ function App() {
           <Route exact path="/password/forgot" element={<Forgotpassword/>}></Route>
           <Route exact path="/password/reset/:token" element={<ResetPassword/>}></Route>
           <Route exact path="/cart" element={<Cart/>}></Route>
-          <Route exact path="/shipping" element={<Shipping/>}></Route>
+          <Route exact path="/shipping" element={<Ship/>}></Route> 
         </Routes>
       </Router>
     </>
