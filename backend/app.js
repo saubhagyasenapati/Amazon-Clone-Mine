@@ -5,6 +5,7 @@ const connectToMongo = require("./config/db");
 const productRoute = require("./routes/productRoute");
 const userRoute = require("./routes/userRoutes");
 const orderRoute = require("./routes/orderRoute");
+const paymentRoute = require("./routes/paymentRoute");
 const errorMiddleware = require("./middleware/error");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
@@ -26,6 +27,7 @@ connectToMongo();
 app.use("/api/v1", productRoute);
 app.use("/api/auth", userRoute);
 app.use("/api/v1", orderRoute);
+app.use("/api/v1", paymentRoute);
 //MiddleWare for error
 app.use(errorMiddleware);
 app.listen(process.env.PORT, () => {

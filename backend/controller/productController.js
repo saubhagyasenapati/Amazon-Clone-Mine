@@ -86,24 +86,25 @@ exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+
+// exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
+//   console.log(req);
+//   const product = await Product.findById(req.params.id);
+//   if (!product) {
+//     return res.status(500).json({
+//       success: false,
+//       message: "Product not found",
+//     });
+//   }
+
+//   await product.remove();
+
+//   res.status(200).json({
+//     success: true,
+//     message: "Product Deleted successfully",
+//   });
+// });
 //Create New Review or Update the Review
-exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
-  const product = await Product.findById(req.params.id);
-  if (!product) {
-    return res.status(500).json({
-      success: false,
-      message: "Product not found",
-    });
-  }
-
-  await product.remove();
-
-  res.status(200).json({
-    success: true,
-    message: "Product Deleted successfully",
-  });
-});
-
 exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
   const { rating, comment, productId } = req.body;
   const review = {

@@ -23,7 +23,7 @@ const ReviewCard = ({ review }) => {
          <div>
           <ReactStars {...options} />
           <p>{review.comment}</p>
-        <span>{review.date}</span>
+        <span>{String(review.date).substring(0,10)}</span>
         </div>
     
       

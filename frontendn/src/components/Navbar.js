@@ -42,6 +42,7 @@ const Navbar = () => {
             <div className="header_option">
               <span className="headeroption_lineone">Hello,</span>
               <span className="headeroption_linetwo">LogIn</span>
+              
             </div>
           </Link>
           <Link to="/login" className="header_link">

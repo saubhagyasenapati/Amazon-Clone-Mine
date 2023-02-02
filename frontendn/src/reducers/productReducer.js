@@ -8,6 +8,7 @@ import {
   PRODUCT_DETAILS_SUCCESS,
   REVIEW_ADD_FAIL,
   REVIEW_ADD_REQUEST,
+  REVIEW_ADD_RESET,
   REVIEW_ADD_SUCCESS,
 } from "../components/productConstants";
 
@@ -70,12 +71,13 @@ export const productDetailsReducer = (state = { products: [] }, action) => {
   }
 };
 
-export const ReviewReducer = (state = { reviews: [] }, action) => {
+export const newReviewReducer = (state = { }, action) => {
   switch (action.type) {
     case REVIEW_ADD_REQUEST:
       return {
-        loading: true,
         ...state,
+        loading: true,
+      
       };
     case REVIEW_ADD_SUCCESS:
       return {
@@ -84,9 +86,15 @@ export const ReviewReducer = (state = { reviews: [] }, action) => {
       };
     case REVIEW_ADD_FAIL:
       return {
+        ...state,
         loading: false,
         error: action.payload,
       };
+      case REVIEW_ADD_RESET:
+        return {
+         ...state,
+          success:false,
+        };
     case CLEAR_ERRORS:
       return {
         ...state,

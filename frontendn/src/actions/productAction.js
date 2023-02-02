@@ -55,19 +55,17 @@ export const getProductDetails = (id) => async (dispatch) => {
     });
   }
 };
-export const Reviewadd = (review) => async (dispatch) => {
+//ReviewAdd
+export const newReviewadd = (review) => async (dispatch) => {
   try {
     dispatch({
       type: REVIEW_ADD_REQUEST,
     });
-    const config = { headers: { "Content-type": "application/json" } };
-    const { data } = await axios.put(`api/v1/review`,
-      review,
-      config
-    )
+    const config = { headers: { "Content-type": "application/json" }, };
+    const { data } = await axios.put(`/api/v1/review`,review,config)
     dispatch({
       type: REVIEW_ADD_SUCCESS,
-      success: data.success
+      payload: data.success
     });
   } catch (error) {
     dispatch({

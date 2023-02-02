@@ -1,46 +1,91 @@
-import React, { Fragment, useEffect ,useState} from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { clearErrors, getProductDetails } from "../actions/productAction";
+import {
+  clearErrors,
+  getProductDetails,
+  newReviewadd,
+} from "../actions/productAction";
 import { useParams } from "react-router-dom";
 import ReactStars from "react-stars";
 import ReviewCard from "./subcomponents/ReviewCard";
-import ReviewAdd from "./subcomponents/ReviewAdd";
 import Loader from "./Layout/Loader/Loader";
-import {ToastContainer,toast} from'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { addItemsToCart } from "../actions/cartActions";
+import { Rating } from "@mui/material";
+import { REVIEW_ADD_RESET } from "./productConstants";
+
 const ProductDetails = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  useEffect(() => {
-    if(error){
-        toast(error, {
-            position: "bottom-center",
-            autoClose: 10000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-            });
-            dispatch(clearErrors())
-        }
-        dispatch(getProductDetails(id));
-      
-  }, []);
   const { products, loading, error } = useSelector(
     (state) => state.productDetails
   );
+  const { success, error: reviewError } = useSelector((state) => state.review);
+  const [reviewadd, setreviewadd] = useState("");
+  const [rating, setrating] = useState(0);
+
+  const SubmitReview = async () => {
+    const myForm = new FormData();
+    myForm.set("productId", id);
+    myForm.set("comment", reviewadd);
+    myForm.set("rating", rating);
+    dispatch(newReviewadd(myForm));
+  };
+  useEffect(() => {
+    if (error) {
+      toast(error, {
+        position: "bottom-center",
+        autoClose: 10000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      dispatch(clearErrors());
+    }
+    dispatch(getProductDetails(id));
+
+    if (reviewError) {
+      toast(reviewError, {
+        position: "bottom-center",
+        autoClose: 10000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      dispatch(clearErrors());
+    }
+
+    if (success) {
+      toast("Review added Successfully", {
+        position: "bottom-center",
+        autoClose: 10000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
+      dispatch({ type: REVIEW_ADD_RESET });
+    }
+  }, [dispatch, error, success, reviewError]);
+
   const [value, setValue] = useState();
 
   const handleChange = (e) => {
     setValue(e.target.value);
   };
-  const addToCartHandler=()=>{
-    dispatch(addItemsToCart(id,value))
-  }
+  const addToCartHandler = () => {
+    dispatch(addItemsToCart(id, value));
+  };
 
   const options = {
     edit: false,
@@ -159,13 +204,20 @@ const ProductDetails = () => {
                     <label class="input-group-text" for="inputGroupSelect01">
                       quantity
                     </label>
-                    <select class="form-select" id="inputGroupSelect01" value={value} onChange={handleChange}>
-                    <option selected value="0">0</option>
-                      <option  value="1">1</option>
-                      <option value='2'>2</option>
-                      <option value='3'>3</option>
-                      <option value='4'>4</option>
-                      <option value='5'>5</option>
+                    <select
+                      class="form-select"
+                      id="inputGroupSelect01"
+                      value={value}
+                      onChange={handleChange}
+                    >
+                      <option selected value="0">
+                        0
+                      </option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
                     </select>
                   </div>
                   <button onClick={addToCartHandler}>Add to Cart</button>
@@ -177,7 +229,32 @@ const ProductDetails = () => {
 
           <div className="reviewsHead">
             <div className="addreview">
-              <ReviewAdd id={id} />
+              <div>
+                <h3>Review this product</h3>
+                <div className="mb-3 row">
+                  <label
+                    for="inputPassword"
+                    className="col-sm-2 col-form-label"
+                  >
+                    Add your review
+                  </label>
+                  <div className="col-sm-10">
+                    <Rating
+                      onChange={(e) => setrating(e.target.value)}
+                      value={rating}
+                      size="large"
+                    />
+                    <textarea
+                      name="review"
+                      cols="50"
+                      onChange={(e) => setreviewadd(e.target.value)}
+                      rows="7"
+                      value={reviewadd}
+                    ></textarea>
+                    <button onClick={SubmitReview}>Add Review</button>
+                  </div>
+                </div>
+              </div>
             </div>
             <div className="showreview">
               <h3>Top reviews from india</h3>
@@ -278,8 +355,8 @@ const Section = styled.section`
   .addreview {
     border-right: 1px solid;
     height: 500px;
-    margin-top:1rem ;
-    padding:1rem ;
+    margin-top: 1rem;
+    padding: 1rem;
   }
   .showreview {
     margin-left: 1rem;

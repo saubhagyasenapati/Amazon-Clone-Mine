@@ -8,7 +8,7 @@ const Cart = () => {
   const { cartItems } = useSelector((state) => state.cart);
   const navigate=useNavigate();
   const checkoutHandler=()=>{
-    navigate("/shipping")
+    navigate("/order/address")
   }
   console.log(cartItems);
   return (
@@ -58,7 +58,7 @@ const Cart = () => {
               )}`}</span>
             </div>
 
-            <button onClick={checkoutHandler}>Checkout</button>
+            <button className="checkoutbtn"onClick={checkoutHandler}>Checkout</button>
           </div>
         </Section>
       )}
@@ -70,7 +70,7 @@ export default Cart;
 
 const Section = styled.section`
   display: grid;
-  grid-template-columns: 70% 30%;
+  grid-template-columns: 75% 25%;
   margin: 1rem;
   .cartcontainer {
     background-color: white;
@@ -79,7 +79,7 @@ const Section = styled.section`
   .subtotalcontainer {
     background-color: white;
     margin: 1rem;
-    height: 20%;
+    height: 30rem;
     width: 90%;
     display: grid;
     padding: 1rem;
@@ -103,5 +103,15 @@ const Section = styled.section`
     display:flex;
     justify-content:flex-end ;
     padding:1rem ;
+  }
+  .checkoutbtn{
+    margin: 15px auto;
+    display: grid;
+    width: 100%;
+    height:20% ;
+    background-color: #ff9900;
+    border: 1px solid;
+    border-radius: 0.3rem;
+    border-color: #a88734 #9c7e31 #846a29;
   }
 `;

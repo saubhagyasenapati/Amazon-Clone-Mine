@@ -1,20 +1,19 @@
 // import React, { useState } from "react";
 // import { useDispatch, useSelector } from "react-redux";
 // import styled from "styled-components";
-// import {Country,State,City} from "country-state-city"
 // import e from "express";
 // import { saveShippingInfo } from "../actions/cartActions";
 // import { useNavigate } from "react-router-dom";
 // const Shipping = () => {
 //   const dispatch = useDispatch();
 
-//   const { shippingInfo } = useSelector((state) => state.cart);
-//   const [address, setaddress] = useState(shippingInfo.address);
-//   const [city, setcity] = useState(shippingInfo.city);
-//   const [state, setState] = useState(shippingInfo.state);
-//   const [country, setCountry] = useState(shippingInfo.country);
-//   const [pincode, setPincode] = useState(shippingInfo.pinCode);
-//   const [phoneNo, setPhoneNo] = useState(shippingInfo.phoneNo);
+  
+//   const [address, setaddress] = useState();
+//   const [city, setcity] = useState();
+//   const [state, setState] = useState();
+//   const [country, setCountry] = useState();
+//   const [pincode, setPincode] = useState();
+//   const [phoneNo, setPhoneNo] = useState();
 //  const navigate=useNavigate();
 //   const shippingsubmit = () => {
 //     e.preventDefault();
@@ -22,7 +21,7 @@
 //         console.log("Enter again");
 //     }
 //     dispatch(
-//          saveShippingInfo({address,city,state,country,pincode,phoneNo})
+//          saveShippingInfo({address})
 //     );
 //     navigate("/order/confirm")
 //   };
@@ -38,8 +37,7 @@
 //           >
 //             <div>
 //               <span>Address </span>
-//               <input
-//                 type="text"
+//               <textarea
 //                 placeholder="Address"
 //                 required
 //                 value={address}
@@ -67,7 +65,7 @@
 //                 size="10"
 //               />
 //             </div>
-//             <div>
+//             {/* <div>
 //                 <select
 //                 required
 //                 value={country}
@@ -109,7 +107,7 @@
 //                     ))}
 //                   </select>
 //               </div>
-//             )}
+//             )} */}
 //            <button disabled={city?false:true}>Submit</button>
 //           </form>
 //         </div>
@@ -117,25 +115,69 @@
 //     </Section>
 //   );
 // };
-
-// export default Shipping;
-
-// const Section = styled.section`
-// display:flex ;
-// justify-content:center ;
-// align-items:center ;
-// margin:2rem ;
-// `;
-
-
-import React from 'react'
-
+import React, { useState} from 'react'
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components'
+import { saveShippingInfo } from '../actions/cartActions';
 const Shipping = () => {
+  const dispatch=useDispatch();
+  const [address, setaddress] = useState();
+  const [pincode, setpincode] = useState();
+  const [phoneNo, setphoneno] = useState();
+  const navigate=useNavigate();
+
+  const handleSubmit=(e)=>{
+        e.preventDefault();
+      
+        dispatch(
+             saveShippingInfo({address,pincode,phoneNo})
+        );
+        navigate("/order/payment")
+      };
+
+ 
+  
+  
   return (
-    <div>
-      Great
-    </div>
+    <Section>
+           <div>
+              <h5>Address</h5>
+               <textarea type="text" className="form-control" name="address" placeholder="1234 Main St"   onChange={(e)=>setaddress(e.target.value)}/>
+              </div>
+              <div>
+              <h5>Pincode</h5>
+               <input type="text" className="form-control" name="pincode" placeholder="pincode"   onChange={(e)=>setpincode(e.target.value)}/>
+              </div>
+              <div>
+              <h5>Phone Number</h5>
+               <input type="number" className="form-control" name="phoneno" placeholder="Phone No."  onChange={(e)=>setphoneno(e.target.value)}/>
+              </div>
+              <div>
+                <button className='shipbtn'  onClick={handleSubmit} >Submit</button>
+              </div>
+    </Section>
   )
 }
 
-export default Shipping
+
+
+export default Shipping;
+
+const Section = styled.section`
+display:grid ;
+justify-content:center ;
+align-items:center ;
+margin:2rem ;
+.shipbtn{
+  margin: 15px auto;
+    display: grid;
+    width: 100%;
+    background-color: #ff9900;
+    border: 1px solid;
+    border-radius: 0.3rem;
+    border-color: #a88734 #9c7e31 #846a29;
+}
+`;
+
+

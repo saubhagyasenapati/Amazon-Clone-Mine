@@ -49,7 +49,7 @@ const Profile = () => {
       </div>
       <div>
         <div>
-          <button className='amazonbutton'><Link className='link' to="/orders">My Orders</Link></button>
+          <button className='amazonbutton'><Link className='link' to="/myorders">My Orders</Link></button>
         
         </div>
         <div>

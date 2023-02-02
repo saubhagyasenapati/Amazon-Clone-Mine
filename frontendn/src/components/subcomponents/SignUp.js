@@ -84,7 +84,6 @@ const SignUp = () => {
     myForm.set("email", email);
     myForm.set("password", password);
     myForm.set("avatar", avatar);
-    console.log(avatar);
     dispatch(register(myForm));
   };
   const handleChange = (e) => {
@@ -153,7 +152,7 @@ const SignUp = () => {
               <div className="input">
               <h5>Profile Picture</h5>
               <input type="file"  name="avatar" onChange={handleChange} />
-              {!avatarPreview? <p>Choose image</p>:<img className="previewprofile" src={avatarPreview} alt="" />}
+              {!avatarPreview? <p>Choose image</p>:<img className="previewprofile" src={avatarPreview} alt=""  onChange={(e) => handleChange(e)} />}
               
               </div>
               <button type="submit">Register</button>
@@ -184,7 +183,7 @@ const Section = styled.section`
   flex-direction: column;
   
   width: 100vw;
-  height: 100vh;
+  height: 120vh;
   img {
     width: 60%;
     height: 60%;
