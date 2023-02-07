@@ -205,7 +205,7 @@ const ProductDetails = () => {
                       quantity
                     </label>
                     <select
-                      class="form-select"
+                      className="form-select"
                       id="inputGroupSelect01"
                       value={value}
                       onChange={handleChange}

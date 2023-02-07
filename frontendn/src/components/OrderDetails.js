@@ -25,28 +25,48 @@ const OrderDetails = () => {
     <div>
      {loading?<Loader/>:<Section> 
         <MetaData title="Order Details"/>
-         <h5>Order #{order._id}</h5>
+        <div className='box1'>
+        <h4>Order #{order._id}</h4>
          <b>Ship to:</b>
-         <p>{order.shippingInfo&&order.shippingInfo.address}</p>
-         <p>Pincode:{order.shippingInfo&&order.shippingInfo.pincode}</p>
-         <p>Pincode:{order.shippingInfo&&order.shippingInfo.phoneNo}</p>
+         <span>{order.shippingInfo&&order.shippingInfo.address}</span>
+         <span>Pincode:{order.shippingInfo&&order.shippingInfo.pincode}</span>
+         <span>Pincode:{order.shippingInfo&&order.shippingInfo.phoneNo}</span>
+         <div className='orderstats'>
          <div>
-            <p>Payment:</p>
-            <p className={order.paymentInfo&&order.paymentInfo.status==="succeeded"?"greenColor":"redColor"}>{order.paymentInfo&&order.paymentInfo.status==="succeeded"?"PAID":"NOT PAID"}</p>
+            <b>Payment:</b>
+            <b className={order.paymentInfo&&order.paymentInfo.status==="succeeded"?"greenColor":"redColor"}>{order.paymentInfo&&order.paymentInfo.status==="succeeded"?"PAID":"NOT PAID"}</b>
          </div>
          <div>
-            <p className={order.orderStatus&& order.orderStatus==="Delivered"?"greenColor":"redColor"}>{order.orderStatus}</p>
+          <b>OrderStatus:</b>
+            <b className={order.orderStatus&& order.orderStatus==="Delivered"?"greenColor":"redColor"}>{order.orderStatus}</b>
           </div>
+         </div>
+           <hr />
          {order.orderItems&&order.orderItems.map((item)=>( 
-            <div>
-                <img src={item.image} alt="product" />
+            <div className='orderitem'>
+              <div>
+              <img src={item.image} alt="product" />
+              </div>
+               <div className='orderitemdetails'>
+                <div>
                 <Link to={`/product/${item.product}`}>{item.name}</Link>
-                <span>
-                    {item.quantity*item.price}
-                </span>
+                </div>
+               <div>
+               <p><b>Qty:</b>{item.quantity}</p>
+               </div>
+               <div>
+               <p>
+                  <b>Total:</b>  {item.quantity*item.price}
+                </p>
+               </div>
+             
+               </div>
+             
             </div>
          ))}
          <div>
+        </div>
+        
          
          <div>
           <h1>Payment</h1>
@@ -79,11 +99,37 @@ const OrderDetails = () => {
 export default OrderDetails
 
 const Section=styled.section`  
+
 .greenColor{
   color:green
 }
 .redColor{
   color:red
 }
-
+.orderstats{
+  display:flex ;
+  justify-content:space-between ;
+}
+.box1{
+  border-radius:2rem ;
+  border: 1px solid;
+  padding:1rem ;
+  margin:2rem ;
+  img{
+    height:200px ;
+    width:200px ;
+    margin-top:10px ;
+    margin-right:10px ;
+  }
+  .orderitem{
+    display:flex ;
+    .orderitemdetails{
+         display:flex ;
+         justify-content:space-evenly ;
+         div{
+          padding:20px ;
+         }
+    }
+  }
+}
 `

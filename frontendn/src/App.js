@@ -26,15 +26,20 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Myorders from "./components/Myorders";
 import OrderDetails from "./components/OrderDetails";
+import Dashboard from "./components/admin components/Dashboard";
+import ProductList from "./components/admin components/ProductList";
+import NewProduct from "./components/NewProduct";
+import UpdateProduct from "./components/admin components/UpdateProduct";
+import OrderList from "./components/admin components/OrderList";
+import UpdateOrder from "./components/admin components/UpdateOrder";
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const [stripeApiKey, setstripeApiKey] = useState(null);
   async function getStripeApiKey() {
     const { data } = await axios.get("/api/v1/stripeapikey");
     setstripeApiKey(data.stripeApiKey);
-  
   }
-  
+
   useEffect(() => {
     store.dispatch(loadUser());
     getStripeApiKey();
@@ -98,21 +103,25 @@ function App() {
               element={<PaymentOverview />}
             ></Route>
           )}
-            {isAuthenticated && (
-            <Route
-              exact
-              path="/myorders"
-              element={<Myorders />}
-            ></Route>
+          {isAuthenticated && (
+            <Route exact path="/myorders" element={<Myorders />}></Route>
           )}
-            <Route
-              exact
-              path="/order/:id"
-              element={<OrderDetails />}
-            ></Route>
-              <Route exact path="/order/paymentstripe" element={<Elements stripe={loadStripe(stripeApiKey)}><Payment/></Elements>}></Route>
-    
-
+          <Route exact path="/order/:id" element={<OrderDetails />}></Route>
+          <Route
+            exact
+            path="/order/paymentstripe"
+            element={
+              <Elements stripe={loadStripe(stripeApiKey)}>
+                <Payment />
+              </Elements>
+            }
+          ></Route>
+          <Route exact path="/admin/dashboard" element={<Dashboard />}></Route>
+          <Route exact path="/admin/products" element={<ProductList />}></Route>
+          <Route exact path="/admin/product" element={<NewProduct />}></Route>
+          <Route exact path="/admin/product/:id" element={< UpdateProduct/>}></Route>
+          <Route exact path="/admin/orders" element={< OrderList/>}></Route>
+          <Route exact path="/admin/order/:id" element={<UpdateOrder/>}></Route>
         </Routes>
       </Router>
     </>
