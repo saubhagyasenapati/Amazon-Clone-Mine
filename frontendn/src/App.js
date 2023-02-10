@@ -36,6 +36,7 @@ import UsersList from "./components/admin components/UsersList";
 import UpdateUser from "./components/admin components/UpdateUser";
 import ProductReviews from "./components/admin components/ProductReviews";
 import ProtectedRoute from "./components/ProtectedRoute";
+import NotFound from "./components/subcomponents/NotFound";
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const [stripeApiKey, setstripeApiKey] = useState(null);
@@ -49,12 +50,14 @@ function App() {
     getStripeApiKey();
   }, []);
 
+  window.addEventListener("contextmenu",(e)=>e.preventDefault())
   return (
     <>
       <Router>
         {isAuthenticated && <NavbarLogin user={user} />}
         {!isAuthenticated && <Navbar />}
         <Routes>
+          <Route path ="*" element={<NotFound/>}/>
           <Route exact path="/" element={<Home />}></Route>
           <Route exact path="/product/:id" element={<ProductDetails />}></Route>
           <Route exact path="/products" element={<Products />}></Route>
