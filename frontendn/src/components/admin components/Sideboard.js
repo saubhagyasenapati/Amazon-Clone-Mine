@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../../Assets/logo2.jpg'
+import logo from '../../Assets/logo3.png'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import AddIcon from '@mui/icons-material/Add';
@@ -15,27 +15,25 @@ const Sideboard = () => {
   return (
     <Section className='sidebar'>
         <Link className='header' to="/"><img src={logo} alt="" /></Link>
-        <Link to="/admin/dashboard"><p><DashboardIcon/>Dashboard</p></Link>
+        <Link to="/admin/dashboard" className="pages"><p><DashboardIcon/>Dashboard</p></Link>
           <TreeView defaultCollapseIcon={<ExpandMoreIcon/>} defaultExpandIcon={<ImportExportIcon/>}>
          <TreeItem nodeId='1' label="Products">
-                  <Link to="/admin/products">
+                  <Link className="pages" to="/admin/products">
                   <TreeItem nodeId='2' label="ALL" icon={<PostAddIcon/>}/>
                   </Link>
-                  <Link to="/admin/product">
+                  <Link className="pages" to="/admin/product">
                   <TreeItem nodeId='3' label="create" icon={<AddIcon/>}/>
                   </Link>
          </TreeItem>
           </TreeView>
 
-          <Link to="/admin/orders">
+          <Link className="pages" to="/admin/orders">
            <p><ListAltIcon/>Orders</p>
           </Link>
-          <Link to="/admin/users">
+          <Link className="pages" to="/admin/users">
            <p><PeopleIcon/>Users</p>
           </Link>
-          <Link to="/admin/reviews">
-           <p><RateReviewIcon/>Reviews</p>
-          </Link>
+
     </Section>
   )
 }
@@ -47,7 +45,10 @@ a{
  text-decoration:none ;
  transition:all 0.5s ;
  color:grey;
-  padding:2rem ;
+  padding:4rem ;
+}
+.pages{
+  padding-top:4rem ;
 }
 .sidebar{
     background-color:white ;
@@ -60,8 +61,8 @@ a{
 .header{
     padding:0;
     img{
-    height:100px ;
-    width:90% ;
+    height:150px ;
+    width:100% ;
     object-fit:contain ;
 }
 }

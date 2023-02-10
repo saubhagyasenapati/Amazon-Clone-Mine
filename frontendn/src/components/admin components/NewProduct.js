@@ -1,14 +1,14 @@
 import React,{useState,useEffect} from "react";
-import Sideboard from "./admin components/Sideboard";
+import Sideboard from "./Sideboard";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import DescriptionIcon from "@mui/icons-material/Description";
 import StorageIcon from "@mui/icons-material/Storage";
 import SpellcheckIcon from "@mui/icons-material/Spellcheck";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { useDispatch, useSelector } from "react-redux";
-import { clearErrors, createProduct } from "../actions/productAction";
+import { clearErrors, createProduct } from "../../actions/productAction";
 import { useNavigate } from "react-router-dom";
-import { NEW_PRODUCT_RESET } from "./productConstants";
+import { NEW_PRODUCT_RESET } from "../productConstants";
 import styled from "styled-components";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -182,8 +182,17 @@ justify-content:center ;
         height:250px ;
         width:250px;
     }
+    
     }
-
+    button{
+      margin: 15px auto;
+    display: grid;
+    width: 100%;
+    background-color: #ff9900;
+    border: 1px solid;
+    border-radius: 0.3rem;
+    border-color: #a88734 #9c7e31 #846a29;
+    }
 }
 
 }

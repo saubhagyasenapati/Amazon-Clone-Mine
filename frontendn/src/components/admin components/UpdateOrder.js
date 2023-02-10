@@ -8,6 +8,7 @@ import MetaData from "../Layout/MetaData";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UPDATE_ORDER_RESET } from "../../constants/orderConstant";
+import Sideboard from "./Sideboard";
 
 const UpdateOrder = () => {
   const { order, error, loading } = useSelector((state) => state.orderDetails);
@@ -73,6 +74,8 @@ const UpdateOrder = () => {
       ) : (
         <Section>
           <MetaData title="Order Proccessing" />
+          <div className="dashboard">
+          <Sideboard/>
           <div className="box1">
             <h4>Order #{order._id}</h4>
             <b>Ship to:</b>
@@ -195,6 +198,8 @@ const UpdateOrder = () => {
                   
             </div>
           </div>
+          </div>
+          
         </Section>
       )}
     </div>
@@ -204,6 +209,13 @@ const UpdateOrder = () => {
 export default UpdateOrder;
 
 const Section = styled.section`
+  .dashboard {
+    width: 100vw;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    
+  }
   .greenColor {
     color: green;
   }

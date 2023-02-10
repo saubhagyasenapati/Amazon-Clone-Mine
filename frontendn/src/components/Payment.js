@@ -2,11 +2,10 @@ import React,{useEffect} from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
-  cardCvcElement,
+ 
   useStripe,
   useElements,
   CardNumberElement,
-  CardElement,
   CardExpiryElement,
   CardCvcElement,
 } from "@stripe/react-stripe-js";
@@ -19,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { clearErrors, createOrder } from "../actions/orderAction";
+import { RESET_CART } from "../constants/cartConstant";
 
 const Payment = () => {
   const navigate = useNavigate();
@@ -78,7 +78,8 @@ const Payment = () => {
             status:result.paymentIntent.status,
           }
           dispatch(createOrder(order))
-          console.log(order);
+          localStorage.removeItem("cartItems");
+          dispatch({type:RESET_CART})
           navigate("/order/placed");
         } else {
           toast("There was some error proccessing the payment", {

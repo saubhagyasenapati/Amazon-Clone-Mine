@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const Shipping = () => {
-  const {shippingInfo,cartItems}=useSelector((state)=>state.cart)
+  const {shippingInfo}=useSelector((state)=>state.cart)
   const {user}=useSelector((state)=>state.user);
-
+  const cartItems=JSON.parse(localStorage.getItem("cartItemsfinal"))  ;
   return (
     <Section>
       <div className="box1">

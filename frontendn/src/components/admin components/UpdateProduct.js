@@ -217,6 +217,18 @@ justify-content:center ;
         height:250px ;
         width:250px;
     }
+    input{
+      padding:10px;
+    }
+    }
+    button{
+      margin: 15px auto;
+    display: grid;
+    width: 100%;
+    background-color: #ff9900;
+    border: 1px solid;
+    border-radius: 0.3rem;
+    border-color: #a88734 #9c7e31 #846a29;
     }
 
 }

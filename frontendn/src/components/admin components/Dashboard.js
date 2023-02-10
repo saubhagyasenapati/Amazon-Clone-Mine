@@ -8,6 +8,9 @@ import { Doughnut, Line } from "react-chartjs-2";
 import { Chart as ChartJS,LineElement,CategoryScale,LinearScale,PointElement,ArcElement,Tooltip,Legend } from "chart.js";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductAdmin } from "../../actions/productAction";
+import { getAllOrder } from "../../actions/orderAction";
+import { getAllUsers } from "../../actions/userActions";
+import MetaData from "../Layout/MetaData";
 
 ChartJS.register(
     LineElement,
@@ -22,6 +25,8 @@ const Dashboard = () => {
   const dispatch=useDispatch();
   let inStock=0;
   const {products}=useSelector((state)=>state.products);
+  const {orders,amount}=useSelector((state)=>state.allOrders);
+  const {users}=useSelector((state)=>state.allUsers);
   let OutofStock=0;
   products && products.forEach((item)=>{
     if(item.Stock===0){
@@ -31,7 +36,9 @@ const Dashboard = () => {
   })
 
   useEffect(() => {
-    dispatch(getProductAdmin())
+    dispatch(getProductAdmin()) 
+    dispatch(getAllOrder())
+    dispatch(getAllUsers());
 }, [dispatch])
 
     const lineState={
@@ -42,7 +49,7 @@ const Dashboard = () => {
                 backgroundColor:["tomato"],
                 hoverBackgroundColor:["rgb(197,72,49"],
                 borderColor: 'rgb(75, 192, 192)',
-                data:[0,4000]
+                data:[0,amount]
             }
         ]
     }
@@ -77,6 +84,7 @@ const Dashboard = () => {
   
   return (
     <Section>
+         <MetaData title={"Dashboard"} />
       <div className="dashboard">
         <Sideboard />
         <div className="dashboardContainer">
@@ -85,7 +93,7 @@ const Dashboard = () => {
             <div className="amountdiv">
               <p>
                 Total Amount <br />
-                20000
+                {Math.round(amount)}
               </p>
             </div>
             <div className="dashboardSummaryBox2">
@@ -94,11 +102,11 @@ const Dashboard = () => {
               </Link>
               <Link to="/admin/orders">
                 <p>Orders</p>
-                <p>10</p>
+                <p>{orders&&orders.length}</p>
               </Link>
               <Link to="/admin/users">
                 <p>Users</p>
-                <p>2</p>
+                <p>{users&&users.length}</p>
               </Link>
             </div>
             <div className="lineChart">
@@ -156,8 +164,8 @@ const Section = styled.section`
         padding:1.5rem ;
         font:300 1.5rem "Roboto" ;
         margin:2rem ;
-        height:12vmax ;
-        width:12vmax ;
+        height:8vmax ;
+        width:8vmax ;
         text-decoration:none ;
     }
 

@@ -1,27 +1,29 @@
 import { DataGrid } from '@mui/x-data-grid'
 import React, { Fragment } from 'react'
-import EditIcon from '@mui/icons-material/Edit';
+
 import DeleteIcon from '@mui/icons-material/Delete';
-import RateReviewIcon from '@mui/icons-material/RateReview';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@mui/material';
 import styled from 'styled-components';
 import Sideboard from './Sideboard';
-import { clearErrors, deleteProduct, getProductAdmin } from '../../actions/productAction';
+import { clearErrors, deleteReview, newReviews } from '../../actions/productAction';
 import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { DELETE_PRODUCT_RESET } from '../productConstants';
+import { DELETE_REVIEWS_RESET } from '../productConstants';
 
-const ProductList = () => {
+const ProductReviews = () => {
     const dispatch=useDispatch();
    const navigate=useNavigate();
-    const {error,products}=useSelector((state)=>state.products);
-    const {error:deleteError,isDeleted}=useSelector((state)=>state.product);
-    const deleteProductHandler=(id)=>{
-        dispatch(deleteProduct(id))
-      
+   const{id}=useParams()
+    const {error:deleteError,isDeleted}=useSelector((state)=>state.reviews);
+    const {error,reviews}=useSelector((state)=>state.productReviews);
+    const deleteReviewHandler=(rid)=>{
+        const myform=new FormData();
+        myform.set("productId",id);
+        myform.set("id",rid)
+        dispatch(deleteReview(myform))
     }
     useEffect(() => {
         if(error){
@@ -51,7 +53,7 @@ const ProductList = () => {
             dispatch( clearErrors())
         }
         if(isDeleted){
-            toast("Product Deleted Successfully", {
+            toast("Review Deleted Successfully", {
                 position: "bottom-center",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -61,30 +63,29 @@ const ProductList = () => {
                 progress: undefined,
                 theme: "dark",
               });
-              navigate("/admin/dashboard")
-              dispatch( {type:DELETE_PRODUCT_RESET} )
+              navigate(`/admin/reviews/${id}`)
+            dispatch( {type:DELETE_REVIEWS_RESET} )
         }
-        dispatch(getProductAdmin())
+        dispatch(newReviews(id))
     
     
     }, [dispatch,alert,error,deleteError,isDeleted])
     
     const columns = [
-        { field: "id", headerName: "Product ID", flex:0.5,minWidth:200 },
-        { field: "name", headerName: "Name",minWidth:350,flex:1   
+        { field: "id", headerName: "Review ID", flex:0.5,minWidth:200 },
+        { field: "name", headerName: "Name",minWidth:150,flex:0.3   
     },
-        { field: "stock", headerName: "Stock", type: "number" ,minWidth:150,flex:0.3 },
-        { field: "price", headerName: "Price", type: "number" ,minWidth:270 ,flex:0.5},
+        { field: "comment", headerName: "Comment", minWidth:350,flex:1 },
+        { field: "rating", headerName: "Rating", minWidth:270 ,flex:0.5,
+        cellClassName:(params)=>{
+            return params.getValue(params.id,"rating")>=3?"greenColor":"redColor";
+        }
+    },
         { field: "actions", headerName: "Actions", type: "number" ,minWidth:150 ,flex:0.3 ,sortable:false,
         renderCell:(params)=>{
             return (
                 <Fragment>
-
-                       <Link to={`/admin/product/${params.getValue(params.id,"id")}`}>
-                   <EditIcon/>
-                </Link>
-                <Button onClick={()=>deleteProductHandler(params.getValue(params.id,"id"))}><DeleteIcon/></Button>
-                <Link to={`/admin/reviews/${params.getValue(params.id,"id")}`}><RateReviewIcon/></Link>
+                <Button onClick={()=>deleteReviewHandler(params.getValue(params.id,"id"))}><DeleteIcon/></Button>
                 </Fragment>
               
             )
@@ -93,11 +94,11 @@ const ProductList = () => {
       ];
 
       const rows=[];
-      products&&products.forEach((item)=>{
+      reviews&&reviews.forEach((item)=>{
         rows.push({
            id:item._id,
-           stock:item.Stock,
-           price:item.price,
+           rating:item.rating,
+           comment:item.comment,
            name:item.name,
         })
      });
@@ -106,7 +107,7 @@ const ProductList = () => {
        <div className="dashboard">
         <Sideboard/>
         <div className="productListContainer">
-            <h1 id="productListHeading">All Products</h1>
+            <h1 id="productListHeading">All Reviews</h1>
             <DataGrid rows={rows} columns={columns} pageSize={10} disableSelectionOnClick className='productListTable' autoHeight/>
         </div>
        </div>
@@ -115,7 +116,7 @@ const ProductList = () => {
   )
 }
 
-export default ProductList
+export default ProductReviews
 
 
 const Section=styled.section`  
@@ -133,5 +134,13 @@ const Section=styled.section`
 .MuiDataGrid-columnHeader div{
     color:white ;
    font:500 1.1vmax !important;
+}
+.redColor{
+    color:red;
+    font-weight:600 ;
+}
+.greenColor{
+    color:green;
+    font-weight:600 ;
 }
 `

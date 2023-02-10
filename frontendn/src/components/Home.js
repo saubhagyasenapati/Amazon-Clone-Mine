@@ -37,7 +37,7 @@ function Home() {
       <Loader />
       ):(
       <Section>
-        <MetaData title={"Home Page is Working"} />
+        <MetaData title={"Amazon"} />
         <div id="carouselExample" className="carousel slide">
           <div className="carousel-inner">
             <div className="carousel-item active">
@@ -113,20 +113,20 @@ export default Home;
 
 const Section = styled.section`
   .home_image {
-    max-height: 80%;
+    max-height: 70%;
     max-width: 100%;
     mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
-    z-index: -1;
-    /* margin-bottom:-200px ; */
+    margin-bottom:-50px ;
+    
   }
+ 
   .home_row{
+    position:relative ;
     display:flex ;
     margin:2vmax auto;
     width:90vw;
     flex-wrap:wrap ;
-
     z-index: 1;
-   
     }
    
     

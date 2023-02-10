@@ -73,7 +73,7 @@ import {
         dispatch({type:ALL_ORDER_REQUEST});
         const {data}=await axios.get(`/api/v1/admin/orders`);
 
-        dispatch({type:ALL_ORDER_SUCCESS,payload:data.orders});
+        dispatch({type:ALL_ORDER_SUCCESS,payload:data});
     } catch (error) {
         dispatch({
             type:ALL_ORDER_FAIL,

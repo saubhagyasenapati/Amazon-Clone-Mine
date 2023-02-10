@@ -1,7 +1,9 @@
 const Order = require("../Models/orderModel");
-const Product = require("../Models/productModels");
+const Product=require("../Models/productModels")
 const ErrorHandler = require("../utils/errorhandler");
 const catchAsyncErrors = require("../middleware/catchAsyncError");
+const sendEmail=require("../utils/sendEmail");
+const User=require("../Models/userModel");
 
 exports.newOrder = catchAsyncErrors(async (req, res, next) => {
   const {
@@ -25,12 +27,27 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     paidAt: Date.now(),
     user: req.user._id,
   });
-
+  const user=await User.findById(order.user);
+  const orderUrl=`${process.env.FRONTEND_URL}/order/${order._id}`;
+  const message=`Your order has been placed successfully with us :-\n\n Order can be viewed at ${orderUrl} \n\n Total items:${order.orderItems.length}\n\n Total Amount:${order.totalPrice} `;
+   try{
+       await sendEmail({
+           email:user.email,
+           subject:"Ecommerce Password Recovery",
+           message
+       })
+      }
+      catch(error){
+        console.log("Email not sent")
+      }
+  
+      
   res.status(201).json({
     success: true,
     order,
   });
 });
+
 
 //Get Single Order
 
@@ -90,13 +107,10 @@ exports.updateOrder = catchAsyncErrors(async(req, res, next) => {
   }
 
   order.orderStatus = req.body.status;
-
-  order&&order.orderItems.forEach(async (o) => {
-    const product = await Product.findById(o.product);
-    console.log(product);
-    product.Stock = Product.Stock - o.quantity;
-    await product.save({ validateBeforeSave: false });
-  });
+  if (order.orderStatus === "Shipped") {
+  order.orderItems.forEach(async (o) => {
+    await updateStock(o.product, o.quantity);
+  });}
 
   if (req.body.status === "Delivered") {
     order.deliveredAt = Date.now();
@@ -108,7 +122,9 @@ exports.updateOrder = catchAsyncErrors(async(req, res, next) => {
   });
 });
 async function updateStock(id, quantity) {
-  
+  const product = await Product.findById(id);
+  product.Stock = product.Stock - quantity;
+  await product.save({ validateBeforeSave: false });
 }
 
 //Delete Order --Admin

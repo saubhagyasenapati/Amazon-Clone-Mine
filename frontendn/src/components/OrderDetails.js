@@ -34,7 +34,8 @@ const OrderDetails = () => {
          <div className='orderstats'>
          <div>
             <b>Payment:</b>
-            <b className={order.paymentInfo&&order.paymentInfo.status==="succeeded"?"greenColor":"redColor"}>{order.paymentInfo&&order.paymentInfo.status==="succeeded"?"PAID":"NOT PAID"}</b>
+            {order.orderStatus&&order.orderStatus==="Cancelled"? <b className="redColor">REFUNDED</b>: <b className={order.paymentInfo&&order.paymentInfo.status==="succeeded"?"greenColor":"redColor"}>{order.paymentInfo&&order.paymentInfo.status==="succeeded"?"PAID":"NOT PAID"}</b>}
+           
          </div>
          <div>
           <b>OrderStatus:</b>

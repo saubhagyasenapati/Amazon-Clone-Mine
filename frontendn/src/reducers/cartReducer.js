@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_CART_ITEM, SAVE_SHIPPING_INFO } from "../constants/cartConstant";
+import { ADD_TO_CART, REMOVE_CART_ITEM, RESET_CART, SAVE_SHIPPING_INFO } from "../constants/cartConstant";
 
 export const cartReducer = (state = { cartItems: [] }, action) => {
     switch(action.type){
@@ -34,6 +34,10 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
             default:
                 return state
                 
-              
+    case RESET_CART:
+        return{
+            ...state,
+            cartItems:[]
+        }       
     }
 };

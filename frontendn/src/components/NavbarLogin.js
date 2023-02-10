@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../Assets/logo.png";
@@ -6,7 +6,7 @@ import cart from "../Assets/cart.png";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Logout } from "../actions/userActions";
+import { logout } from "../actions/userActions";
 import {ToastContainer,toast} from'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -14,7 +14,6 @@ const NavbarLogin = ({user}) => {
     const [keyword, setkeyword] = useState("");
     const dispatch= useDispatch();
     const navigate = useNavigate();
-    
     const { cartItems } = useSelector((state) => state.cart);
     const searchSubmitHandler = (e) => {
       e.preventDefault();
@@ -25,8 +24,9 @@ const NavbarLogin = ({user}) => {
       }
     };
     const handleLogout=()=>{
-       dispatch(Logout());
-       navigate("/");
+     
+       dispatch(logout());
+       navigate("/login")
         toast("LogOut Successfull", {
           position: "bottom-center",
           autoClose: 10000,
@@ -66,15 +66,21 @@ const NavbarLogin = ({user}) => {
             </Link>
             <Link to="/login" className="header_link">
               <div className="header_option">
-             <button onClick={handleLogout}>LOGOUT</button>
+             <button className="logoutbtn"onClick={handleLogout}>LOGOUT</button>
               </div>
             </Link>
-            <Link to="/login" className="header_link">
+            {user.role==="admin"? <Link to="/admin/dashboard" className="header_link">
+              <div className="header_option">
+                <span className="headeroption_lineone">Admin</span>
+                <span className="headeroption_linetwo">Dashboard</span>
+              </div>
+            </Link> :  <Link to="/login" className="header_link">
               <div className="header_option">
                 <span className="headeroption_lineone">Returns,</span>
                 <span className="headeroption_linetwo">& Orders</span>
               </div>
-            </Link>
+            </Link>}
+          
             <Link to="/cart" className="header_link">
               <div className="header_optionBasket">
                 <img src={cart} alt="cart" className="cart_img" />
@@ -91,13 +97,13 @@ const NavbarLogin = ({user}) => {
           <nav className="navbar navbar-expand-lg bg-dark ">
             <div className="container-fluid">
               <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div className="navbar-nav">
-                  <Link className="nav-link active" to="/products">
+                <div className="navbar-nav cat">
+                  <Link className="nav-link cat" to="/products">
                     All
                   </Link>
                   <a class="nav-link">Electronics</a>
-                  <a class="nav-link">Home And Kitchen</a>
-                  <a class="nav-link ">Fashion</a>
+                  <a class="nav-link ">Home And Kitchen</a>
+                  <a class="nav-link  ">Fashion</a>
                 </div>
               </div>
             </div>
@@ -115,8 +121,23 @@ export default NavbarLogin
 const Section = styled.section`
   display: flex;
   flex-direction: column;
+  .cat{
+    a{
+      color:white;
+    }
+  
+  }
+.logoutbtn{
+  margin-top:3px ;
+    display: grid;
+    width: 100%;
+    background-color: #ff9900;
+    border: 1px solid;
+    border-radius: 0.3rem;
+    border-color: #a88734 #9c7e31 #846a29;
+}
   .header {
-    padding: 3px;
+    padding: 5px;
     background-color: #131921;
     display: flex;
     align-items: center;
@@ -131,15 +152,16 @@ const Section = styled.section`
       display: flex;
       flex: 1;
       .header_searchinput {
-        height: 12px;
+        height: 14px;
         padding: 10px;
         border: none;
         width: 90%;
       }
       .header_SearchIcon {
-        padding: 5px;
-        height: 22px;
+        padding: 6px;
+        height: 21px;
         background-color: #ff9900;
+       font-size:2rem ;
       }
     }
     .header_nav {

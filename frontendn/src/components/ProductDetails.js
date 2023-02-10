@@ -15,6 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { addItemsToCart } from "../actions/cartActions";
 import { Rating } from "@mui/material";
 import { REVIEW_ADD_RESET } from "./productConstants";
+import MetaData from "./Layout/MetaData";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,12 @@ const ProductDetails = () => {
   const { products, loading, error } = useSelector(
     (state) => state.productDetails
   );
+  const Stock=products.Stock>10?5:products.Stock;
+  const s=[];
+  for(var i=0;i<=Stock;i++){
+    s.push(i);
+  } 
+  console.log(s);
   const { success, error: reviewError } = useSelector((state) => state.review);
   const [reviewadd, setreviewadd] = useState("");
   const [rating, setrating] = useState(0);
@@ -100,6 +107,7 @@ const ProductDetails = () => {
         <Loader />
       ) : (
         <Section>
+           <MetaData title={`${products.name}`} />
           <div className="Product">
             <div id="carouselExample" className="carousel slide">
               <div className="carousel-inner">
@@ -210,14 +218,12 @@ const ProductDetails = () => {
                       value={value}
                       onChange={handleChange}
                     >
-                      <option selected value="0">
-                        0
-                      </option>
-                      <option value="1">1</option>
-                      <option value="2">2</option>
-                      <option value="3">3</option>
-                      <option value="4">4</option>
-                      <option value="5">5</option>
+                      {
+                       s.map((i)=>{
+                        return(<option value={i}>{i}</option>)
+                       })
+                      }
+      
                     </select>
                   </div>
                   <button onClick={addToCartHandler}>Add to Cart</button>

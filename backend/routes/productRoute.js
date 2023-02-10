@@ -25,5 +25,5 @@ router
 router.route("/products/:id").get(GetAProductDetails);
 
 router.route("/review").put(isAuthenticatedUser,createProductReview);
-router.route("/reviews").get(getProductReviews).delete(isAuthenticatedUser,deleteReviews);
+router.route("/reviews").get(getProductReviews).delete(isAuthenticatedUser, authorizeRoles("admin"),deleteReviews);
 module.exports = router;

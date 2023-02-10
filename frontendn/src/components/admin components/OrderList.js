@@ -20,7 +20,7 @@ const OrderList = () => {
   const dispatch=useDispatch();
   const navigate=useNavigate();
    const {error,orders}=useSelector((state)=>state.allOrders);
-   const {error:deleteError,isDeleted}=useSelector((state)=>state.product);
+   const {error:deleteError,isDeleted}=useSelector((state)=>state.order);
    const deleteOrderHandler=(id)=>{
        dispatch(deleteOrder(id))
  
@@ -64,7 +64,7 @@ const OrderList = () => {
                theme: "dark",
              });
              navigate("/admin/orders")
-           dispatch( DELETE_ORDER_RESET )
+           dispatch({type: DELETE_ORDER_RESET })
        }
        dispatch(getAllOrder())
    
