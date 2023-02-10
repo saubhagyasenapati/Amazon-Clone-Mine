@@ -28,6 +28,11 @@ app.use("/api/v1", productRoute);
 app.use("/api/auth", userRoute);
 app.use("/api/v1", orderRoute);
 app.use("/api/v1", paymentRoute);
+
+app.use(express.static(path.join(___dirname,"../frontend/build")))
+app.get("*",(req,res)=>{
+  res.sendFile(path.resolve(__dirname,"../frontend/build/index.html"));
+})
 //MiddleWare for error
 app.use(errorMiddleware);
 app.listen(process.env.PORT, () => {

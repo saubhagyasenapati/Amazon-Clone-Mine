@@ -1,7 +1,7 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 
-import { Navigate, Outlet, Route } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 // const ProtectedRoute=({isAdmin,element:Component,...rest})=>{
 
@@ -27,7 +27,6 @@ import { Navigate, Outlet, Route } from "react-router-dom";
 // }
 const ProtectedRoute = ({ isAdmin, children }) => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
-  console.log(isAuthenticated);
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }

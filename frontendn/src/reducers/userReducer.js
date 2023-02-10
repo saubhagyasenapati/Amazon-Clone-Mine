@@ -1,5 +1,4 @@
 import {
-  ALL_ORDER_SUCCESS,
   DELETE_ORDER_FAIL,
 } from "../constants/orderConstant";
 import {
@@ -143,7 +142,6 @@ export const profileReducer = (state = {}, action) => {
       };
 
     case UPDATE_PROFILE_FAIL:
-    case UPDATE_PASSWORD_FAIL:
     case UPDATE_PASSWORD_FAIL:
     case DELETE_ORDER_FAIL:
       return {
