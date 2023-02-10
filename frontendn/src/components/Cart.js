@@ -1,16 +1,14 @@
 import React, { Fragment } from "react";
 import styled from "styled-components";
 import CartItemCard from "./subcomponents/CartItemCard";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 const Cart = () => {
-  const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
-  const navigate=useNavigate();
-  const checkoutHandler=()=>{
-    navigate("/order/address")
-  }
-  console.log(cartItems);
+  const navigate = useNavigate();
+  const checkoutHandler = () => {
+    navigate("/order/address");
+  };
   return (
     <Fragment>
       {cartItems.length === 0 ? (
@@ -29,28 +27,33 @@ const Cart = () => {
                   <hr />
                 </div>
               ))}
-              <div className="subtotalitems">
+            <div className="subtotalitems">
               <span className="subtotalmain">
-              {`Subtotal( ${cartItems.reduce(
-                (acc, item) => acc + 1,
-                0
-              )}items ):`}
+                {`Subtotal( ${cartItems.reduce(
+                  (acc, item) => acc + 1,
+                  0
+                )}items ):`}
               </span>
               <span className="subtotalfinal">{`₹${cartItems.reduce(
                 (acc, item) => acc + item.quantity * item.price,
                 0
               )}`}</span>
-              </div>
-              
+            </div>
           </div>
           <div className="subtotalcontainer">
-            <p className="green"><img src="https://cdn-icons-png.flaticon.com/512/845/845646.png?w=740&t=st=1674401008~exp=1674401608~hmac=52451c06781bbb523cbe80ee03804c35ca8641f1f4d2916dbe960c40195f2cd8" alt="" /> Your item is eligible for free delivery</p>
+            <p className="green">
+              <img
+                src="https://cdn-icons-png.flaticon.com/512/845/845646.png?w=740&t=st=1674401008~exp=1674401608~hmac=52451c06781bbb523cbe80ee03804c35ca8641f1f4d2916dbe960c40195f2cd8"
+                alt=""
+              />{" "}
+              Your item is eligible for free delivery
+            </p>
             <div>
               <span className="subtotalmain">
-              {`Subtotal( ${cartItems.reduce(
-                (acc, item) => acc + 1,
-                0
-              )}items ):`}
+                {`Subtotal( ${cartItems.reduce(
+                  (acc, item) => acc + 1,
+                  0
+                )}items ):`}
               </span>
               <span className="subtotalfinal">{`₹${cartItems.reduce(
                 (acc, item) => acc + item.quantity * item.price,
@@ -58,7 +61,9 @@ const Cart = () => {
               )}`}</span>
             </div>
 
-            <button className="checkoutbtn"onClick={checkoutHandler}>Checkout</button>
+            <button className="checkoutbtn" onClick={checkoutHandler}>
+              Checkout
+            </button>
           </div>
         </Section>
       )}
@@ -88,27 +93,27 @@ const Section = styled.section`
     font-weight: 700;
     font-size: 20px;
   }
-  .subtotalmain{
+  .subtotalmain {
     font-size: 20px;
   }
-  .green{
-    img{
-        height:20px ;
-        width:20px ;
+  .green {
+    img {
+      height: 20px;
+      width: 20px;
     }
-    font-size:16px ;
-    color:green;
+    font-size: 16px;
+    color: green;
   }
-  .subtotalitems{
-    display:flex;
-    justify-content:flex-end ;
-    padding:1rem ;
+  .subtotalitems {
+    display: flex;
+    justify-content: flex-end;
+    padding: 1rem;
   }
-  .checkoutbtn{
+  .checkoutbtn {
     margin: 15px auto;
     display: grid;
     width: 100%;
-    height:20% ;
+    height: 20%;
     background-color: #ff9900;
     border: 1px solid;
     border-radius: 0.3rem;

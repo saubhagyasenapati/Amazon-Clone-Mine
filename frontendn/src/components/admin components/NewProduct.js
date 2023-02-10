@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Sideboard from "./Sideboard";
 import AccountTreeIcon from "@mui/icons-material/AccountTree";
 import DescriptionIcon from "@mui/icons-material/Description";
@@ -34,58 +34,66 @@ const NewProduct = () => {
 
   useEffect(() => {
     if (error) {
-        toast(error, {
-            position: "bottom-center",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-          });
+      toast(error, {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       dispatch(clearErrors());
     }
     if (success) {
-      console.log("Created Succesdfully");
+      toast("Product Created Successfully", {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "dark",
+      });
       navigate("/admin/dashboard");
       dispatch({ type: NEW_PRODUCT_RESET });
     }
   }, [dispatch, error, success]);
 
-  const createProductSubmitHandler=(e)=>{
+  const createProductSubmitHandler = (e) => {
     e.preventDefault();
-    const myform=new FormData();
+    const myform = new FormData();
 
-    myform.set("name",name);
-    myform.set("price",price);
-    myform.set("description",description);
-    myform.set("category",category);
-    myform.set("Stock",stock);
-   
-    images.forEach((image)=>{
-        myform.append("images",image);
+    myform.set("name", name);
+    myform.set("price", price);
+    myform.set("description", description);
+    myform.set("category", category);
+    myform.set("Stock", stock);
+
+    images.forEach((image) => {
+      myform.append("images", image);
     });
     dispatch(createProduct(myform));
+  };
 
-  }
-
-  const createProductImagesChange=(e)=>{
-    const files=Array.from(e.target.files);
+  const createProductImagesChange = (e) => {
+    const files = Array.from(e.target.files);
 
     setImages([]);
     setImagesPreview([]);
 
-    files.forEach((file)=>{
-     const reader=new FileReader();
-     reader.onload=()=>{
-        if(reader.readyState===2){
-            setImagesPreview((old)=>[...old,reader.result]);
-            setImages((old)=>[...old,reader.result]);
+    files.forEach((file) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        if (reader.readyState === 2) {
+          setImagesPreview((old) => [...old, reader.result]);
+          setImages((old) => [...old, reader.result]);
         }
-     };
-     reader.readAsDataURL(file);
-    })
+      };
+      reader.readAsDataURL(file);
+    });
   };
   return (
     <Section>
@@ -122,8 +130,8 @@ const NewProduct = () => {
             </div>
             <div>
               <AccountTreeIcon />
-              <select  onChange={(e) => setCategory(e.target.value)}>
-                <option value="" >Choose Category</option>
+              <select onChange={(e) => setCategory(e.target.value)}>
+                <option value="">Choose Category</option>
                 {categories.map((cat) => (
                   <option key={cat} value={cat}>
                     {cat}
@@ -141,7 +149,13 @@ const NewProduct = () => {
               />
             </div>
             <div className="createProductFormFile">
-              <input type="file" name="images" accept="image/*" multiple  onChange={createProductImagesChange}/>
+              <input
+                type="file"
+                name="images"
+                accept="image/*"
+                multiple
+                onChange={createProductImagesChange}
+              />
             </div>
             <div className="createProductFormImage">
               {imagesPreview.map((image, index) => (
@@ -153,14 +167,13 @@ const NewProduct = () => {
               type="submit"
               onClick={createProductSubmitHandler}
               disabled={loading ? true : false}
-              
             >
               Create Product
             </button>
           </form>
         </div>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </Section>
   );
 };
@@ -168,40 +181,35 @@ const NewProduct = () => {
 export default NewProduct;
 
 const Section = styled.section`
-
-.newProductContainer{
-    display:flex ;
-align-items:center ;
-justify-content:center ;
-.createProductForm{
-    .createProductFormImage{
-        width:100% ;
-        overflow:auto ;
-        img{
-        border-radius:100% ;
-        height:250px ;
-        width:250px;
+  .newProductContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .createProductForm {
+      .createProductFormImage {
+        width: 100%;
+        overflow: auto;
+        img {
+          border-radius: 100%;
+          height: 250px;
+          width: 250px;
+        }
+      }
+      button {
+        margin: 15px auto;
+        display: grid;
+        width: 100%;
+        background-color: #ff9900;
+        border: 1px solid;
+        border-radius: 0.3rem;
+        border-color: #a88734 #9c7e31 #846a29;
+      }
     }
-    
-    }
-    button{
-      margin: 15px auto;
+  }
+  .dashboard {
+    width: 100vw;
+    max-width: 100%;
     display: grid;
-    width: 100%;
-    background-color: #ff9900;
-    border: 1px solid;
-    border-radius: 0.3rem;
-    border-color: #a88734 #9c7e31 #846a29;
-    }
-}
-
-}
-.dashboard {
-  width: 100vw;
-  max-width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 5fr;
-  
-} 
-
-`
+    grid-template-columns: 1fr 5fr;
+  }
+`;

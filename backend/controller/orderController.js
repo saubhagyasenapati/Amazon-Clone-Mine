@@ -29,11 +29,11 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
   });
   const user=await User.findById(order.user);
   const orderUrl=`${process.env.FRONTEND_URL}/order/${order._id}`;
-  const message=`Your order has been placed successfully with us :-\n\n Order can be viewed at ${orderUrl} \n\n Total items:${order.orderItems.length}\n\n Total Amount:${order.totalPrice} `;
+  const message=`Your order has been placed successfully with us :-\n\nOrder can be viewed at ${orderUrl} \n\nTotal items:${order.orderItems.length}\n\nTotal Amount:${order.totalPrice} `;
    try{
        await sendEmail({
            email:user.email,
-           subject:"Ecommerce Password Recovery",
+           subject:"Order Placed Successfully",
            message
        })
       }

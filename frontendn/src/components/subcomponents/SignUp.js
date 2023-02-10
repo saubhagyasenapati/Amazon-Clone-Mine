@@ -71,7 +71,7 @@ const SignUp = () => {
     email: "",
     password: "",
   });
-  const { error, loading, isAuthenticated } = useSelector(
+  const { loading } = useSelector(
     (state) => state.user
   );
   const { name, email, password } = user;

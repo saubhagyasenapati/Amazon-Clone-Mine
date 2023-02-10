@@ -10,7 +10,7 @@ import { useParams } from "react-router-dom";
 import ReactStars from "react-stars";
 import ReviewCard from "./subcomponents/ReviewCard";
 import Loader from "./Layout/Loader/Loader";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { addItemsToCart } from "../actions/cartActions";
 import { Rating } from "@mui/material";
@@ -23,12 +23,12 @@ const ProductDetails = () => {
   const { products, loading, error } = useSelector(
     (state) => state.productDetails
   );
-  const Stock=products.Stock>10?5:products.Stock;
-  const s=[];
-  for(var i=0;i<=Stock;i++){
+  const Stock = products.Stock > 10 ? 5 : products.Stock;
+  const s = [];
+  for (var i = 0; i <= Stock; i++) {
     s.push(i);
-  } 
-  console.log(s);
+  }
+  
   const { success, error: reviewError } = useSelector((state) => state.review);
   const [reviewadd, setreviewadd] = useState("");
   const [rating, setrating] = useState(0);
@@ -107,7 +107,7 @@ const ProductDetails = () => {
         <Loader />
       ) : (
         <Section>
-           <MetaData title={`${products.name}`} />
+          <MetaData title={`${products.name}`} />
           <div className="Product">
             <div id="carouselExample" className="carousel slide">
               <div className="carousel-inner">
@@ -218,12 +218,9 @@ const ProductDetails = () => {
                       value={value}
                       onChange={handleChange}
                     >
-                      {
-                       s.map((i)=>{
-                        return(<option value={i}>{i}</option>)
-                       })
-                      }
-      
+                      {s.map((i) => {
+                        return <option value={i}>{i}</option>;
+                      })}
                     </select>
                   </div>
                   <button onClick={addToCartHandler}>Add to Cart</button>

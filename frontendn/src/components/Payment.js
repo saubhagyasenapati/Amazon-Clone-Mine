@@ -1,8 +1,7 @@
-import React,{useEffect} from "react";
+import React, { useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import {
- 
   useStripe,
   useElements,
   CardNumberElement,
@@ -22,25 +21,25 @@ import { RESET_CART } from "../constants/cartConstant";
 
 const Payment = () => {
   const navigate = useNavigate();
-  const dispatch=useDispatch();
+  const dispatch = useDispatch();
   const stripe = useStripe();
   const elements = useElements();
   const orderInfo = JSON.parse(sessionStorage.getItem("orderInfo"));
   const payBtn = useRef(null);
   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
-   const {error}=useSelector((state)=>state.newOrder);
+  const { error } = useSelector((state) => state.newOrder);
   const paymentData = {
-    amount: Math.round(orderInfo.totalPrice*100),
+    amount: Math.round(orderInfo.totalPrice * 100),
   };
-  const order={
+  const order = {
     shippingInfo,
-    orderItems:cartItems,
-    itemsPrice:orderInfo.subtotal,
-    taxPrice:orderInfo.tax,
-    shippingPrice:orderInfo.shippingCharges,
-    totalPrice:orderInfo.totalPrice,
-  }
+    orderItems: cartItems,
+    itemsPrice: orderInfo.subtotal,
+    taxPrice: orderInfo.tax,
+    shippingPrice: orderInfo.shippingCharges,
+    totalPrice: orderInfo.totalPrice,
+  };
   const submitHandler = async (e) => {
     e.preventDefault();
     payBtn.current.disabled = true;
@@ -73,13 +72,13 @@ const Payment = () => {
         payBtn.current.disabled = false;
       } else {
         if (result.paymentIntent.status === "succeeded") {
-          order.paymentInfo={
-            id:result.paymentIntent.id,
-            status:result.paymentIntent.status,
-          }
-          dispatch(createOrder(order))
+          order.paymentInfo = {
+            id: result.paymentIntent.id,
+            status: result.paymentIntent.status,
+          };
+          dispatch(createOrder(order));
           localStorage.removeItem("cartItems");
-          dispatch({type:RESET_CART})
+          dispatch({ type: RESET_CART });
           navigate("/order/placed");
         } else {
           toast("There was some error proccessing the payment", {
@@ -99,7 +98,7 @@ const Payment = () => {
     }
   };
   useEffect(() => {
-    if(error){
+    if (error) {
       toast(error, {
         position: "bottom-center",
         autoClose: 5000,
@@ -110,12 +109,10 @@ const Payment = () => {
         progress: undefined,
         theme: "dark",
       });
-      dispatchEvent(clearErrors)
+      dispatchEvent(clearErrors);
     }
-  
-   
-  }, [dispatch])
-  
+  }, [dispatch]);
+
   return (
     <Section>
       <div className="paymentConatiner">
@@ -140,6 +137,12 @@ const Payment = () => {
             className="paymentBtn"
           />
         </form>
+        <p>
+          <i>
+            You can use <b>4242 4242 4242 4242</b> as your card number for
+            Testing Purpose
+          </i>
+        </p>
       </div>
       <ToastContainer />
     </Section>

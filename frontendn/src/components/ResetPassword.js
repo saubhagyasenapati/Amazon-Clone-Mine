@@ -1,14 +1,14 @@
 
 import React, { useState, useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components";
 import Loader from "./Layout/Loader/Loader";
 
-import { clearErrors, loadUser, register, resetPassword } from "../actions/userActions";
-import { UPDATE_PASSWORD_RESET } from "../constants/userConstant";
+import { clearErrors, resetPassword } from "../actions/userActions";
+
 
 const ResetPassword = () => {
     const navigate = useNavigate();
@@ -56,7 +56,6 @@ const ResetPassword = () => {
         myForm.set("password", NewPassword);
         myForm.set("confirmPassword", ConfirmPassword);
     dispatch(resetPassword(token,myForm));
-    console.log("Submitted");
   };
 
   return (

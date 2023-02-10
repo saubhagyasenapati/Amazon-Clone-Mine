@@ -1,13 +1,10 @@
 import React, { useState, useEffect, Fragment } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
 import styled from "styled-components";
-import logo from "../Assets/logo2.jpg";
-import { clearErrors, loadUser, register, updateProfile } from "../actions/userActions";
+import { clearErrors, loadUser, updateProfile } from "../actions/userActions";
 import Loader from "./Layout/Loader/Loader";
 import { UPDATE_PROFILE_RESET } from "../constants/userConstant";
 const UpdateProfile = () => {
@@ -47,7 +44,31 @@ const UpdateProfile = () => {
           setemail(user.email);
           setAvatarPreview(user.avatar.url)
         }
+        if(error){
+          toast(error, {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+
+           dispatch(clearErrors())
+        }
         if(isUpdated){
+          toast("Profile Updated", {
+            position: "bottom-center",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
            dispatch(loadUser());
            navigate("/account");
            dispatch({

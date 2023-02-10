@@ -38,61 +38,56 @@ const LogIn = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(login(loginEmail, loginPassword));
-    console.log("Submitted");
   };
 
   return (
     <Fragment>
       <Section>
-      
         {loading ? (
           <Loader />
         ) : (
           <div className="login">
-              <div>
-          <img src={logo} alt="" />
-        </div>
-        <div className="box">  
-            <form onSubmit={(event) => handleSubmit(event)}>
-              <div className="signinbox">
-                <h2>Sign In</h2>
+            <div>
+              <img src={logo} alt="" />
+            </div>
+            <div className="box">
+              <form onSubmit={(event) => handleSubmit(event)}>
+                <div className="signinbox">
+                  <h2>Sign In</h2>
 
-                <div className="input">
-                  <h5>Email</h5>
-                  <input
-                    type="email"
-                    required
-                    value={loginEmail}
-                    onChange={(e) => setloginEmail(e.target.value)}
-                    min="3"
-                    size="40"
-                  />
-                </div>
-                <div className="input">
-                  <h5>Password</h5>
-                  <input
-                    type="password"
-                    value={loginPassword}
-                    onChange={(e) => setloginPassword(e.target.value)}
-                    size="40"
-                  />
-                </div>
-                <button type="submit">Log In</button>
-                <span>
-                <Link to="/password/forgot">Forgot Password?</Link>
-                </span>
-                 
-                <span>
-                Don't have an account?<Link to="/register">Register</Link>
-              </span>
-              </div>
+                  <div className="input">
+                    <h5>Email</h5>
+                    <input
+                      type="email"
+                      required
+                      value={loginEmail}
+                      onChange={(e) => setloginEmail(e.target.value)}
+                      min="3"
+                      size="40"
+                    />
+                  </div>
+                  <div className="input">
+                    <h5>Password</h5>
+                    <input
+                      type="password"
+                      value={loginPassword}
+                      onChange={(e) => setloginPassword(e.target.value)}
+                      size="40"
+                    />
+                  </div>
+                  <button type="submit">Log In</button>
+                  <span>
+                    <Link to="/password/forgot">Forgot Password?</Link>
+                  </span>
 
-             
-            </form>
-            <ToastContainer />
+                  <span>
+                    Don't have an account?<Link to="/register">Register</Link>
+                  </span>
+                </div>
+              </form>
+              <ToastContainer />
+            </div>
           </div>
-          </div>
-         
         )}
       </Section>
     </Fragment>
@@ -106,21 +101,21 @@ const Section = styled.section`
   align-items: center;
   background-color: white;
   flex-direction: column;
-  
+
   width: 100vw;
   height: 100vh;
   img {
     width: 60%;
     height: 60%;
-    object-fit:contain ;
-    margin-left:2rem ;  
+    object-fit: contain;
+    margin-left: 2rem;
   }
-  .login{
-   margin:1rem ;
+  .login {
+    margin: 1rem;
   }
-  form{
-    width:80%;
-    height:100% ;
+  form {
+    width: 80%;
+    height: 100%;
   }
   .box {
     border: 1px solid;
@@ -130,27 +125,26 @@ const Section = styled.section`
     padding: 20px;
     border-color: grey;
     display: flex;
-  justify-content: center;
-  align-items: center;
+    justify-content: center;
+    align-items: center;
     .signinbox {
-        
-      .input{
-        margin:5px;
+      .input {
+        margin: 5px;
       }
     }
   }
-  span{
+  span {
     display: flex;
-  justify-content: center;
-  align-items: center;
+    justify-content: center;
+    align-items: center;
   }
-  button{
-    margin: 15px auto ;  
-    display:grid ;
-    width:100% ;
-      background-color: #ff9900;
-      border: 1px solid;
-      border-radius: 0.3rem;
-      border-color: #a88734 #9c7e31 #846a29;
+  button {
+    margin: 15px auto;
+    display: grid;
+    width: 100%;
+    background-color: #ff9900;
+    border: 1px solid;
+    border-radius: 0.3rem;
+    border-color: #a88734 #9c7e31 #846a29;
   }
 `;

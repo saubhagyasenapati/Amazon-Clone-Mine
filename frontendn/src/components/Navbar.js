@@ -1,11 +1,10 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../Assets/logo.png";
 import cart from "../Assets/cart.png";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
-
 
 const Navbar = () => {
   const [keyword, setkeyword] = useState("");
@@ -38,11 +37,9 @@ const Navbar = () => {
 
         <div className="header_nav">
           <Link to="/login" className="header_link">
-           
             <div className="header_option">
               <span className="headeroption_lineone">Hello,</span>
               <span className="headeroption_linetwo">LogIn</span>
-              
             </div>
           </Link>
           <Link to="/login" className="header_link">
@@ -77,11 +74,10 @@ const Navbar = () => {
         </nav>
       </div>
     </Section>
-  )
-}
+  );
+};
 
-export default Navbar
-
+export default Navbar;
 
 const Section = styled.section`
   display: flex;

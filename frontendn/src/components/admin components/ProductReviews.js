@@ -20,10 +20,8 @@ const ProductReviews = () => {
     const {error:deleteError,isDeleted}=useSelector((state)=>state.reviews);
     const {error,reviews}=useSelector((state)=>state.productReviews);
     const deleteReviewHandler=(rid)=>{
-        const myform=new FormData();
-        myform.set("productId",id);
-        myform.set("id",rid)
-        dispatch(deleteReview(myform))
+        dispatch(deleteReview(rid,id))
+        
     }
     useEffect(() => {
         if(error){

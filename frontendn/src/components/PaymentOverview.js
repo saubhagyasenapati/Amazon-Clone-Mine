@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 const PaymentOverview = () => {
   const { cartItems } = useSelector((state) => state.cart);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   const subtotal = cartItems.reduce(
     (acc, item) => acc + item.quantity * item.price,
     0
@@ -13,17 +13,16 @@ const PaymentOverview = () => {
   const shippingCharges = subtotal > 1000 ? 0 : 299;
   const tax = subtotal * 0.12;
   const totalPrice = subtotal + tax + shippingCharges;
-  const orderInfo={
+  const orderInfo = {
     shippingCharges,
     tax,
     totalPrice,
-    subtotal
-  }
-  const submitHandler=()=>{
-  sessionStorage.setItem("orderInfo",JSON.stringify(orderInfo));
-    navigate("/order/paymentstripe")
-
-  }
+    subtotal,
+  };
+  const submitHandler = () => {
+    sessionStorage.setItem("orderInfo", JSON.stringify(orderInfo));
+    navigate("/order/paymentstripe");
+  };
   return (
     <Section>
       <div className="box">
@@ -84,9 +83,9 @@ const Section = styled.section`
   .charges {
     display: flex;
     margin: 15px 0;
-    width:100% ;
+    width: 100%;
     justify-content: space-between;
-    span{
+    span {
       color: #262626;
     }
   }

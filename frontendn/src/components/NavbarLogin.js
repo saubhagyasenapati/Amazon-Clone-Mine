@@ -7,135 +7,137 @@ import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../actions/userActions";
-import {ToastContainer,toast} from'react-toastify'
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const NavbarLogin = ({user}) => {
-    const [keyword, setkeyword] = useState("");
-    const dispatch= useDispatch();
-    const navigate = useNavigate();
-    const { cartItems } = useSelector((state) => state.cart);
-    const searchSubmitHandler = (e) => {
-      e.preventDefault();
-      if (keyword) {
-        navigate(`/products/${keyword}`);
-      } else {
-        navigate("/products");
-      }
-    };
-    const handleLogout=()=>{
-     
-       dispatch(logout());
-       navigate("/login")
-        toast("LogOut Successfull", {
-          position: "bottom-center",
-          autoClose: 10000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
-          });
-      }
-    
-    return (
-      <Section>
-        <div className="header">
-          <Link to="/">
-            <img className="header_logo" src={logo} alt="Logo" />
+const NavbarLogin = ({ user }) => {
+  const [keyword, setkeyword] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { cartItems } = useSelector((state) => state.cart);
+  const searchSubmitHandler = (e) => {
+    e.preventDefault();
+    if (keyword) {
+      navigate(`/products/${keyword}`);
+    } else {
+      navigate("/products");
+    }
+  };
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+    toast("LogOut Successfull", {
+      position: "bottom-center",
+      autoClose: 10000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+  };
+
+  return (
+    <Section>
+      <div className="header">
+        <Link to="/">
+          <img className="header_logo" src={logo} alt="Logo" />
+        </Link>
+        <div className="header_search">
+          <input
+            type="text"
+            className="header_searchinput"
+            onChange={(e) => setkeyword(e.target.value)}
+          />
+          <SearchIcon
+            className="header_SearchIcon"
+            onClick={searchSubmitHandler}
+          />
+        </div>
+
+        <div className="header_nav">
+          <Link to="/login" className="header_link">
+            <div className="header_option">
+              <span className="headeroption_lineone">Hello,</span>
+              <span className="headeroption_linetwo">{user.name}</span>
+            </div>
           </Link>
-          <div className="header_search">
-            <input
-              type="text"
-              className="header_searchinput"
-              onChange={(e) => setkeyword(e.target.value)}
-            />
-            <SearchIcon
-              className="header_SearchIcon"
-              onClick={searchSubmitHandler}
-            />
-          </div>
-  
-          <div className="header_nav">
-            <Link to="/login" className="header_link">
-              <div className="header_option">
-                <span className="headeroption_lineone">Hello,</span>
-                <span className="headeroption_linetwo">{user.name}</span>
-              </div>
-            </Link>
-            <Link to="/login" className="header_link">
-              <div className="header_option">
-             <button className="logoutbtn"onClick={handleLogout}>LOGOUT</button>
-              </div>
-            </Link>
-            {user.role==="admin"? <Link to="/admin/dashboard" className="header_link">
+          <Link to="/login" className="header_link">
+            <div className="header_option">
+              <button className="logoutbtn" onClick={handleLogout}>
+                LOGOUT
+              </button>
+            </div>
+          </Link>
+          {user.role === "admin" ? (
+            <Link to="/admin/dashboard" className="header_link">
               <div className="header_option">
                 <span className="headeroption_lineone">Admin</span>
                 <span className="headeroption_linetwo">Dashboard</span>
               </div>
-            </Link> :  <Link to="/login" className="header_link">
+            </Link>
+          ) : (
+            <Link to="/login" className="header_link">
               <div className="header_option">
                 <span className="headeroption_lineone">Returns,</span>
                 <span className="headeroption_linetwo">& Orders</span>
               </div>
-            </Link>}
-          
-            <Link to="/cart" className="header_link">
-              <div className="header_optionBasket">
-                <img src={cart} alt="cart" className="cart_img" />
-                <span className="basketcount">{`${cartItems.reduce(
+            </Link>
+          )}
+
+          <Link to="/cart" className="header_link">
+            <div className="header_optionBasket">
+              <img src={cart} alt="cart" className="cart_img" />
+              <span className="basketcount">{`${cartItems.reduce(
                 (acc, item) => acc + 1,
                 0
               )}`}</span>
-                <span className="headeroption_lineone">Cart</span>
-              </div>
-            </Link>
-          </div>
+              <span className="headeroption_lineone">Cart</span>
+            </div>
+          </Link>
         </div>
-        <div>
-          <nav className="navbar navbar-expand-lg bg-dark ">
-            <div className="container-fluid">
-              <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div className="navbar-nav cat">
-                  <Link className="nav-link cat" to="/products">
-                    All
-                  </Link>
-                  <a class="nav-link">Electronics</a>
-                  <a class="nav-link ">Home And Kitchen</a>
-                  <a class="nav-link  ">Fashion</a>
-                </div>
+      </div>
+      <div>
+        <nav className="navbar navbar-expand-lg bg-dark ">
+          <div className="container-fluid">
+            <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+              <div className="navbar-nav cat">
+                <Link className="nav-link cat" to="/products">
+                  All
+                </Link>
+                <a class="nav-link">Electronics</a>
+                <a class="nav-link ">Home And Kitchen</a>
+                <a class="nav-link  ">Fashion</a>
               </div>
             </div>
-          </nav>
-        </div>
-        <ToastContainer/>
-      </Section>
-    )
-  }
-  
+          </div>
+        </nav>
+      </div>
+      <ToastContainer />
+    </Section>
+  );
+};
 
-export default NavbarLogin
-
+export default NavbarLogin;
 
 const Section = styled.section`
   display: flex;
   flex-direction: column;
-  .cat{
-    a{
-      color:white;
+  .cat {
+    a {
+      color: white;
     }
-  
   }
-.logoutbtn{
-  margin-top:3px ;
+  .logoutbtn {
+    margin-top: 3px;
     display: grid;
     width: 100%;
     background-color: #ff9900;
     border: 1px solid;
     border-radius: 0.3rem;
     border-color: #a88734 #9c7e31 #846a29;
-}
+  }
   .header {
     padding: 5px;
     background-color: #131921;
@@ -161,7 +163,7 @@ const Section = styled.section`
         padding: 6px;
         height: 21px;
         background-color: #ff9900;
-       font-size:2rem ;
+        font-size: 2rem;
       }
     }
     .header_nav {

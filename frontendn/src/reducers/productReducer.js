@@ -33,12 +33,16 @@ import {
   UPDATE_PRODUCT_RESET,
   UPDATE_PRODUCT_SUCCESS,
 } from "../components/productConstants";
-import { UPDATE_PASSWORD_FAIL, UPDATE_PASSWORD_REQUEST, UPDATE_PASSWORD_SUCCESS } from "../constants/userConstant";
+import {
+  UPDATE_PASSWORD_FAIL,
+  UPDATE_PASSWORD_REQUEST,
+  UPDATE_PASSWORD_SUCCESS,
+} from "../constants/userConstant";
 
 export const productsReducer = (state = { products: [] }, action) => {
   switch (action.type) {
     case ALL_PRODUCT_REQUEST:
-      case ADMIN_PRODUCT_REQUEST:
+    case ADMIN_PRODUCT_REQUEST:
       return {
         loading: true,
         product: [],
@@ -48,16 +52,15 @@ export const productsReducer = (state = { products: [] }, action) => {
         loading: false,
         products: action.payload.products,
         productsCount: action.payload.productCount,
-        resultPerPage:action.payload.resultPerPage,
-        
+        resultPerPage: action.payload.resultPerPage,
       };
-      case ADMIN_PRODUCT_SUCCESS:
-        return {
-          loading: false,
-          products: action.payload,
-        };
+    case ADMIN_PRODUCT_SUCCESS:
+      return {
+        loading: false,
+        products: action.payload,
+      };
     case ALL_PRODUCT_FAIL:
-      case ADMIN_PRODUCT_FAIL:
+    case ADMIN_PRODUCT_FAIL:
       return {
         loading: false,
         error: action.payload,
@@ -83,7 +86,7 @@ export const productDetailsReducer = (state = { products: [] }, action) => {
     case PRODUCT_DETAILS_SUCCESS:
       return {
         loading: false,
-        products: action.payload
+        products: action.payload,
       };
     case PRODUCT_DETAILS_FAIL:
       return {
@@ -101,20 +104,18 @@ export const productDetailsReducer = (state = { products: [] }, action) => {
   }
 };
 
-
-export const newProductReducer = (state = { product:{}}, action) => {
+export const newProductReducer = (state = { product: {} }, action) => {
   switch (action.type) {
     case NEW_PRODUCT_REQUEST:
       return {
         ...state,
         loading: true,
-      
       };
     case NEW_PRODUCT_SUCCESS:
       return {
         loading: false,
         success: action.payload,
-        product:action.payload.product,
+        product: action.payload.product,
       };
     case NEW_PRODUCT_FAIL:
       return {
@@ -122,11 +123,11 @@ export const newProductReducer = (state = { product:{}}, action) => {
         loading: false,
         error: action.payload,
       };
-      case NEW_PRODUCT_RESET:
-        return {
-         ...state,
-          success:false,
-        };
+    case NEW_PRODUCT_RESET:
+      return {
+        ...state,
+        success: false,
+      };
     case CLEAR_ERRORS:
       return {
         ...state,
@@ -138,19 +139,17 @@ export const newProductReducer = (state = { product:{}}, action) => {
   }
 };
 
-
-export const newReviewReducer = (state = { }, action) => {
+export const newReviewReducer = (state = {}, action) => {
   switch (action.type) {
     case REVIEW_ADD_REQUEST:
       return {
         ...state,
         loading: true,
-      
       };
     case REVIEW_ADD_SUCCESS:
       return {
         loading: false,
-        success: action.payload
+        success: action.payload,
       };
     case REVIEW_ADD_FAIL:
       return {
@@ -158,11 +157,11 @@ export const newReviewReducer = (state = { }, action) => {
         loading: false,
         error: action.payload,
       };
-      case REVIEW_ADD_RESET:
-        return {
-         ...state,
-          success:false,
-        };
+    case REVIEW_ADD_RESET:
+      return {
+        ...state,
+        success: false,
+      };
     case CLEAR_ERRORS:
       return {
         ...state,
@@ -174,47 +173,45 @@ export const newReviewReducer = (state = { }, action) => {
   }
 };
 
-export const productReducer = (state = { }, action) => {
+export const productReducer = (state = {}, action) => {
   switch (action.type) {
     case DELETE_PRODUCT_REQUEST:
-      case UPDATE_PRODUCT_REQUEST:
+    case UPDATE_PRODUCT_REQUEST:
       return {
         ...state,
         loading: true,
-      
       };
     case DELETE_PRODUCT_SUCCESS:
       return {
         ...state,
         loading: false,
-        isDeleted: action.payload
+        isDeleted: action.payload,
       };
-      case UPDATE_PRODUCT_SUCCESS:
-        return {
-          ...state,
-          loading: false,
-          isUpdated: action.payload
-        };
+    case UPDATE_PRODUCT_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        isUpdated: action.payload,
+      };
     case DELETE_PRODUCT_FAIL:
-      case UPDATE_PRODUCT_FAIL:
+    case UPDATE_PRODUCT_FAIL:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
-      
-      case DELETE_PRODUCT_RESET:
-        return {
-         ...state,
-         isDeleted:false,
-        };
 
-        case UPDATE_PRODUCT_RESET:
-      
-        return {
-         ...state,
-         isUpdated:false,
-        };
+    case DELETE_PRODUCT_RESET:
+      return {
+        ...state,
+        isDeleted: false,
+      };
+
+    case UPDATE_PRODUCT_RESET:
+      return {
+        ...state,
+        isUpdated: false,
+      };
     case CLEAR_ERRORS:
       return {
         ...state,
@@ -225,7 +222,6 @@ export const productReducer = (state = { }, action) => {
       return state;
   }
 };
-
 
 export const productReviewsReducer = (state = { reviews: [] }, action) => {
   switch (action.type) {
@@ -237,7 +233,7 @@ export const productReviewsReducer = (state = { reviews: [] }, action) => {
     case ALL_REVIEWS_SUCCESS:
       return {
         loading: false,
-        reviews: action.payload
+        reviews: action.payload,
       };
     case ALL_REVIEWS_FAIL:
       return {
@@ -256,18 +252,17 @@ export const productReviewsReducer = (state = { reviews: [] }, action) => {
   }
 };
 
-export const reviewReducer = (state = { }, action) => {
+export const reviewReducer = (state = {}, action) => {
   switch (action.type) {
     case DELETE_REVIEWS_REQUEST:
       return {
         ...state,
         loading: true,
-      
       };
     case DELETE_REVIEWS_SUCCESS:
       return {
         loading: false,
-        isDeleted: action.payload
+        isDeleted: action.payload,
       };
     case DELETE_REVIEWS_FAIL:
       return {
@@ -275,11 +270,11 @@ export const reviewReducer = (state = { }, action) => {
         loading: false,
         error: action.payload,
       };
-      case DELETE_REVIEWS_RESET:
-        return {
-         ...state,
-          isDeleted:false,
-        };
+    case DELETE_REVIEWS_RESET:
+      return {
+        ...state,
+        isDeleted: false,
+      };
     case CLEAR_ERRORS:
       return {
         ...state,

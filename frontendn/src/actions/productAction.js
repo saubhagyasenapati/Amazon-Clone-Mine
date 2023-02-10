@@ -30,8 +30,8 @@ import {
   UPDATE_PRODUCT_REQUEST,
   UPDATE_PRODUCT_SUCCESS,
 } from "../components/productConstants";
-import { UPDATE_PASSWORD_FAIL, UPDATE_PASSWORD_REQUEST } from "../constants/userConstant";
 
+//Get All Pdroducts Filtered
 export const getProduct =
   (keyword = "", currentPage = 1, price, category, rating) =>
   async (dispatch) => {
@@ -58,20 +58,19 @@ export const getProduct =
   };
 //GET ALL PRODUCTS ADMIN
 export const getProductAdmin = () => async (dispatch) => {
-  try{
-    dispatch({type:ADMIN_PRODUCT_REQUEST});
-    const {data}=await axios.get("/api/v1/admin/products");
-    dispatch({type:ADMIN_PRODUCT_SUCCESS,payload:data.products});
+  try {
+    dispatch({ type: ADMIN_PRODUCT_REQUEST });
+    const { data } = await axios.get("/api/v1/admin/products");
+    dispatch({ type: ADMIN_PRODUCT_SUCCESS, payload: data.products });
+  } catch (error) {
+    dispatch({
+      type: ADMIN_PRODUCT_FAIL,
+      payload: error.response.data.message,
+    });
   }
-  catch(error){
-       dispatch({
-        type:ADMIN_PRODUCT_FAIL,
-        payload:error.response.data.message,
-       })
-  }
+};
 
-}
-
+//Get All Products Details
 export const getProductDetails = (id) => async (dispatch) => {
   try {
     dispatch({
@@ -90,16 +89,21 @@ export const getProductDetails = (id) => async (dispatch) => {
   }
 };
 
+//Create A New Product
 export const createProduct = (productData) => async (dispatch) => {
   try {
     dispatch({
-      type:NEW_PRODUCT_REQUEST,
+      type: NEW_PRODUCT_REQUEST,
     });
-    const config = { headers: { "Content-type": "application/json" }, };
-    const { data } = await axios.post(`/api/v1/admin/products/new`,productData,config)
+    const config = { headers: { "Content-type": "application/json" } };
+    const { data } = await axios.post(
+      `/api/v1/admin/products/new`,
+      productData,
+      config
+    );
     dispatch({
       type: NEW_PRODUCT_SUCCESS,
-      payload: data
+      payload: data,
     });
   } catch (error) {
     dispatch({
@@ -109,17 +113,17 @@ export const createProduct = (productData) => async (dispatch) => {
   }
 };
 
-//ReviewAdd
+//Add a review
 export const newReviewadd = (review) => async (dispatch) => {
   try {
     dispatch({
       type: REVIEW_ADD_REQUEST,
     });
-    const config = { headers: { "Content-type": "application/json" }, };
-    const { data } = await axios.put(`/api/v1/review`,review,config)
+    const config = { headers: { "Content-type": "application/json" } };
+    const { data } = await axios.put(`/api/v1/review`, review, config);
     dispatch({
       type: REVIEW_ADD_SUCCESS,
-      payload: data.success
+      payload: data.success,
     });
   } catch (error) {
     dispatch({
@@ -128,17 +132,18 @@ export const newReviewadd = (review) => async (dispatch) => {
     });
   }
 };
+
 //Delete Product
 export const deleteProduct = (id) => async (dispatch) => {
   try {
     dispatch({
       type: DELETE_PRODUCT_REQUEST,
     });
-   
-    const { data } = await axios.delete(`/api/v1/admin/products/${id}`)
+
+    const { data } = await axios.delete(`/api/v1/admin/products/${id}`);
     dispatch({
       type: DELETE_PRODUCT_SUCCESS,
-      payload: data.success
+      payload: data.success,
     });
   } catch (error) {
     dispatch({
@@ -147,17 +152,22 @@ export const deleteProduct = (id) => async (dispatch) => {
     });
   }
 };
+
 //Update Product
-export const updateProduct = (id,productData) => async (dispatch) => {
+export const updateProduct = (id, productData) => async (dispatch) => {
   try {
     dispatch({
       type: UPDATE_PRODUCT_REQUEST,
     });
-    const config = { headers: { "Content-type": "application/json" }, };
-    const { data } = await axios.put(`/api/v1/admin/products/${id}`,productData,config)
+    const config = { headers: { "Content-type": "application/json" } };
+    const { data } = await axios.put(
+      `/api/v1/admin/products/${id}`,
+      productData,
+      config
+    );
     dispatch({
       type: UPDATE_PRODUCT_SUCCESS,
-      payload: data.success
+      payload: data.success,
     });
   } catch (error) {
     dispatch({
@@ -171,41 +181,44 @@ export const updateProduct = (id,productData) => async (dispatch) => {
 export const newReviews = (id) => async (dispatch) => {
   try {
     dispatch({
-      type:ALL_REVIEWS_REQUEST,
+      type: ALL_REVIEWS_REQUEST,
     });
-  
-    const { data } = await axios.get(`/api/v1/reviews?id=${id}`)
+
+    const { data } = await axios.get(`/api/v1/reviews?id=${id}`);
     dispatch({
       type: ALL_REVIEWS_SUCCESS,
-      payload: data.reviews
+      payload: data.reviews,
     });
   } catch (error) {
     dispatch({
-      type:ALL_REVIEWS_FAIL,
+      type: ALL_REVIEWS_FAIL,
       payload: error.response.data.message,
     });
   }
 };
+
 //Delete Review of a product
-export const deleteReview = (reviewData) => async (dispatch) => {
+export const deleteReview = (reviewId, productId) => async (dispatch) => {
   try {
     dispatch({
-      type:DELETE_REVIEWS_REQUEST,
+      type: DELETE_REVIEWS_REQUEST,
     });
-   
-    const config = { headers: { "Content-type": "application/json" }, };
-    const { data } = await axios.delete(`/api/v1/reviews`,reviewData,config)
+
+    const { data } = await axios.delete(
+      `/api/v1/reviews?id=${reviewId}&&productId=${productId}`
+    );
     dispatch({
       type: DELETE_REVIEWS_SUCCESS,
-      payload: data.success
+      payload: data.success,
     });
   } catch (error) {
     dispatch({
-      type:DELETE_REVIEWS_FAIL,
+      type: DELETE_REVIEWS_FAIL,
       payload: error.response.data.message,
     });
   }
 };
+
 //Clearing Errors
 export const clearErrors = () => async (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });

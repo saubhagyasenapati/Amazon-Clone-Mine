@@ -13,20 +13,18 @@ const ReviewCard = ({ review }) => {
     <Section>
       <div>
         <div className="profile">
-        <img
-          className="profilepic"
-          src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-          alt=""
-        />
-        <p>{review.name}</p>
+          <img
+            className="profilepic"
+            src="https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            alt=""
+          />
+          <p>{review.name}</p>
         </div>
-         <div>
+        <div>
           <ReactStars {...options} />
           <p>{review.comment}</p>
-        <span>{String(review.date).substring(0,10)}</span>
+          <span>{String(review.date).substring(0, 10)}</span>
         </div>
-    
-      
       </div>
     </Section>
   );
@@ -35,14 +33,13 @@ const ReviewCard = ({ review }) => {
 export default ReviewCard;
 
 const Section = styled.section`
-
-.profile{
-  display:flex ;
-  flex-direction:row ;
-}
+  .profile {
+    display: flex;
+    flex-direction: row;
+  }
   .profilepic {
     height: 45px;
     width: 40px;
-    border-radius:4rem ;
+    border-radius: 4rem;
   }
 `;
