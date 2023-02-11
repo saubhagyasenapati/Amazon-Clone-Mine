@@ -37,11 +37,12 @@ import UpdateUser from "./components/admin components/UpdateUser";
 import ProductReviews from "./components/admin components/ProductReviews";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./components/subcomponents/NotFound";
+import { API } from "./APIroutes";
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const [stripeApiKey, setstripeApiKey] = useState(null);
   async function getStripeApiKey() {
-    const { data } = await axios.get("/api/v1/stripeapikey");
+    const { data } = await axios.get(`${API}/api/v1/stripeapikey`);
     setstripeApiKey(data.stripeApiKey);
   }
 

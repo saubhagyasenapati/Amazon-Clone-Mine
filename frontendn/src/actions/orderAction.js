@@ -21,6 +21,7 @@ import {
 } from "../constants/orderConstant";
 
 import axios from "axios";
+import { API } from "../APIroutes";
 
 //Create Order Request
 export const createOrder = (order) => async (dispatch) => {
@@ -28,7 +29,7 @@ export const createOrder = (order) => async (dispatch) => {
     dispatch({ type: CREATE_ORDER_REQUEST });
 
     const config = { headers: { "Content-type": "application/json" } };
-    const { data } = await axios.post("/api/v1/order/new", order, config);
+    const { data } = await axios.post(`${API}/api/v1/order/new`, order, config);
 
     dispatch({ type: CREATE_ORDER_SUCCESS, payload: data });
   } catch (error) {
@@ -43,7 +44,7 @@ export const createOrder = (order) => async (dispatch) => {
 export const myOrder = () => async (dispatch) => {
   try {
     dispatch({ type: MY_ORDER_REQUEST });
-    const { data } = await axios.get("/api/v1/orders/me");
+    const { data } = await axios.get(`${API}/api/v1/orders/me`);
 
     dispatch({ type: MY_ORDER_SUCCESS, payload: data.orders });
   } catch (error) {
@@ -57,7 +58,7 @@ export const myOrder = () => async (dispatch) => {
 export const getOrder = (id) => async (dispatch) => {
   try {
     dispatch({ type: ORDER_DETAILS_REQUEST });
-    const { data } = await axios.get(`/api/v1/order/${id}`);
+    const { data } = await axios.get(`${API}/api/v1/order/${id}`);
 
     dispatch({ type: ORDER_DETAILS_SUCCESS, payload: data.order });
   } catch (error) {
@@ -72,7 +73,7 @@ export const getOrder = (id) => async (dispatch) => {
 export const getAllOrder = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_ORDER_REQUEST });
-    const { data } = await axios.get(`/api/v1/admin/orders`);
+    const { data } = await axios.get(`${API}/api/v1/admin/orders`);
 
     dispatch({ type: ALL_ORDER_SUCCESS, payload: data });
   } catch (error) {
@@ -90,7 +91,7 @@ export const updateOrder = (id, order) => async (dispatch) => {
 
     const config = { headers: { "Content-type": "application/json" } };
     const { data } = await axios.put(
-      `/api/v1/admin/order/${id}`,
+      `${API}/api/v1/admin/order/${id}`,
       order,
       config
     );
@@ -107,7 +108,7 @@ export const updateOrder = (id, order) => async (dispatch) => {
 export const deleteOrder = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_ORDER_REQUEST });
-    const { data } = await axios.delete(`/api/v1/admin/order/${id}`);
+    const { data } = await axios.delete(`${API}/api/v1/admin/order/${id}`);
 
     dispatch({ type: DELETE_ORDER_SUCCESS, payload: data.success });
   } catch (error) {
