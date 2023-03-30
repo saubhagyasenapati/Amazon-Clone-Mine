@@ -53,14 +53,12 @@ exports.loginUser=catchAsyncErrors(async(req,res,next)=>{
 
 exports.logout=catchAsyncErrors(async(req,res,next)=>{
 
-    res.cookie("token",null,{
-        expires:new Date(Date.now()),
-        httpOnly:true,
-    });
-    res.status(200).json({
-        success:true,
-        message:'Logged Out',
-    });
+    // res.send("auth-token",null);
+    // res.status(200).json({
+    //     success:true,
+    //     message:'Logged Out',
+    // });
+console.log("Looged Out");
 })
 
 exports.forgotPassword=catchAsyncErrors(async(req,res,next)=>{
@@ -74,8 +72,8 @@ exports.forgotPassword=catchAsyncErrors(async(req,res,next)=>{
    //Get ResetPasswordToken
    const resetToken=user.getResetPassswordToken();
    await user.save({validateBeforeSave:false});
-//    const resetPasswordUrl=`${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
-const resetPasswordUrl=`${req.protocol}://${req.get("host")}/password/reset/${resetToken}`;
+   const resetPasswordUrl=`${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
+// const resetPasswordUrl=`${req.protocol}://${req.get("host")}/password/reset/${resetToken}`;
    const message=`Your Password reset token is :-\n\n${resetPasswordUrl}\n\n if Not requested Kindly ignore it`;
 
    try{
@@ -89,6 +87,7 @@ const resetPasswordUrl=`${req.protocol}://${req.get("host")}/password/reset/${re
         success:true,
         message:`Email Send to ${user.email} successfully`
        })
+    console.log(message);
    }
    catch{
     user.resetPasswordToken=undefined;

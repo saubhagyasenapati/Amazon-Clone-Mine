@@ -24,8 +24,9 @@ const NavbarLogin = ({ user }) => {
     }
   };
   const handleLogout = () => {
+   
     dispatch(logout());
-    navigate("/login");
+    navigate("/");
     toast("LogOut Successfull", {
       position: "bottom-center",
       autoClose: 10000,

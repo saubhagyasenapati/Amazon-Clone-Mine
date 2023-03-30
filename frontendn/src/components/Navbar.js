@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../Assets/logo.png";
@@ -61,13 +61,13 @@ const Navbar = () => {
         <nav className="navbar navbar-expand-lg bg-dark ">
           <div className="container-fluid">
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-              <div className="navbar-nav">
-                <Link className="nav-link active" to="/products">
+            <div className="navbar-nav cat">
+                <Link className="nav-link cat" to="/products">
                   All
                 </Link>
                 <a class="nav-link">Electronics</a>
-                <a class="nav-link">Home And Kitchen</a>
-                <a class="nav-link ">Fashion</a>
+                <a class="nav-link ">Home And Kitchen</a>
+                <a class="nav-link  ">Fashion</a>
               </div>
             </div>
           </div>
@@ -82,6 +82,11 @@ export default Navbar;
 const Section = styled.section`
   display: flex;
   flex-direction: column;
+  .cat {
+    a {
+      color: white;
+    }
+  }
   .header {
     padding: 3px;
     background-color: #131921;

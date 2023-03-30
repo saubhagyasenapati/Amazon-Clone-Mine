@@ -61,7 +61,8 @@ export const getProduct =
 export const getProductAdmin = () => async (dispatch) => {
   try {
     dispatch({ type: ADMIN_PRODUCT_REQUEST });
-    const { data } = await axios.get(`${API}/api/v1/admin/products`);
+    const config = { headers: { "auth-token":localStorage.getItem('token') } };
+    const { data } = await axios.get(`${API}/api/v1/admin/products`,config);
     dispatch({ type: ADMIN_PRODUCT_SUCCESS, payload: data.products });
   } catch (error) {
     dispatch({
@@ -96,7 +97,7 @@ export const createProduct = (productData) => async (dispatch) => {
     dispatch({
       type: NEW_PRODUCT_REQUEST,
     });
-    const config = { headers: { "Content-type": "application/json" } };
+    const config = { headers: { "Content-type": "application/json","auth-token":localStorage.getItem('token') } };
     const { data } = await axios.post(
       `${API}/api/v1/admin/products/new`,
       productData,
@@ -120,7 +121,7 @@ export const newReviewadd = (review) => async (dispatch) => {
     dispatch({
       type: REVIEW_ADD_REQUEST,
     });
-    const config = { headers: { "Content-type": "application/json" } };
+    const config = { headers: { "Content-type": "application/json","auth-token":localStorage.getItem('token') } };
     const { data } = await axios.put(`${API}/api/v1/review`, review, config);
     dispatch({
       type: REVIEW_ADD_SUCCESS,
@@ -140,8 +141,8 @@ export const deleteProduct = (id) => async (dispatch) => {
     dispatch({
       type: DELETE_PRODUCT_REQUEST,
     });
-
-    const { data } = await axios.delete(`${API}/api/v1/admin/products/${id}`);
+    const config = { headers: {"auth-token":localStorage.getItem('token') } };
+    const { data } = await axios.delete(`${API}/api/v1/admin/products/${id}`,config);
     dispatch({
       type: DELETE_PRODUCT_SUCCESS,
       payload: data.success,
@@ -160,7 +161,7 @@ export const updateProduct = (id, productData) => async (dispatch) => {
     dispatch({
       type: UPDATE_PRODUCT_REQUEST,
     });
-    const config = { headers: { "Content-type": "application/json" } };
+    const config = { headers: { "Content-type": "application/json","auth-token":localStorage.getItem('token') } };
     const { data } = await axios.put(
       `${API}/api/v1/admin/products/${id}`,
       productData,
@@ -204,9 +205,9 @@ export const deleteReview = (reviewId, productId) => async (dispatch) => {
     dispatch({
       type: DELETE_REVIEWS_REQUEST,
     });
-
+    const config = { headers: { "auth-token":localStorage.getItem('token') } };
     const { data } = await axios.delete(
-      `${API}/api/v1/reviews?id=${reviewId}&&productId=${productId}`
+      `${API}/api/v1/reviews?id=${reviewId}&&productId=${productId}`,config
     );
     dispatch({
       type: DELETE_REVIEWS_SUCCESS,

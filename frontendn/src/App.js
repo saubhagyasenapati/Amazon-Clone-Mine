@@ -35,16 +35,15 @@ import UpdateOrder from "./components/admin components/UpdateOrder";
 import UsersList from "./components/admin components/UsersList";
 import UpdateUser from "./components/admin components/UpdateUser";
 import ProductReviews from "./components/admin components/ProductReviews";
-// import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./components/subcomponents/NotFound";
 import { API } from "./APIroutes";
 function App() {
   const { isAuthenticated, user } = useSelector((state) => state.user);
-  const [stripeApiKey, setstripeApiKey] = useState(null);
+  const [stripePromise, setstripePromise] = useState(null)
   async function getStripeApiKey() {
     const { data } = await axios.get(`${API}/api/v1/stripeapikey`);
-    setstripeApiKey(data.stripeApiKey);
-  
+    setstripePromise(loadStripe(data.stripeApiKey))
   }
 
   useEffect(() => {
@@ -72,9 +71,9 @@ function App() {
             exact
             path="/updateProfile"
             element={
-              // <ProtectedRoute>
+              <ProtectedRoute>
                 <UpdateProfile />
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }
           ></Route>
 
@@ -82,9 +81,9 @@ function App() {
             exact
             path="/password/update"
             element={
-              // <ProtectedRoute>
+              <ProtectedRoute>
                 <UpdatePassword />
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }
           ></Route>
 
@@ -106,9 +105,9 @@ function App() {
             exact
             path="/order/address"
             element={
-              // <ProtectedRoute>
+              <ProtectedRoute>
                 <Shipping />
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }
           ></Route>
 
@@ -116,9 +115,9 @@ function App() {
             exact
             path="/order/placed"
             element={
-              // <ProtectedRoute>
+              <ProtectedRoute>
                 <Orderfinal />
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }
           ></Route>
 
@@ -126,9 +125,9 @@ function App() {
             exact
             path="/order/payment"
             element={
-              // <ProtectedRoute>
+              <ProtectedRoute>
                 <PaymentOverview />
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }
           ></Route>
 
@@ -136,9 +135,9 @@ function App() {
             exact
             path="/myorders"
             element={
-              // <ProtectedRoute>
+              <ProtectedRoute>
                 <Myorders />
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }
           ></Route>
 
@@ -147,7 +146,7 @@ function App() {
             exact
             path="/order/paymentstripe"
             element={
-                <Elements stripe={loadStripe(stripeApiKey)}>
+                <Elements stripe={stripePromise}>
                   <Payment />
                 </Elements>
             }
@@ -156,9 +155,9 @@ function App() {
           <Route
             path="/admin/dashboard"
             element={
-              // <ProtectedRoute isAdmin={true}>
+              <ProtectedRoute isAdmin={true}>
                 <Dashboard />
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }
           />
 
@@ -166,72 +165,72 @@ function App() {
             exact
             path="/admin/products"
             element={
-              // <ProtectedRoute isAdmin={true}>
+              <ProtectedRoute isAdmin={true}>
                 <ProductList />
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }
           ></Route>
           <Route
             exact
             path="/admin/product"
             element={
-              // <ProtectedRoute isAdmin={true}>
+              <ProtectedRoute isAdmin={true}>
                 <NewProduct />
-              // </ProtectedRoute>
+            </ProtectedRoute>
             }
           ></Route>
           <Route
             exact
             path="/admin/product/:id"
             element={
-              // <ProtectedRoute isAdmin={true}>
+              <ProtectedRoute isAdmin={true}>
                 <UpdateProduct />
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }
           ></Route>
           <Route
             exact
             path="/admin/orders"
             element={
-              // <ProtectedRoute isAdmin={true}>
+              <ProtectedRoute isAdmin={true}>
                 <OrderList />
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }
           ></Route>
           <Route
             exact
             path="/admin/order/:id"
             element={
-              // <ProtectedRoute isAdmin={true}>
+              <ProtectedRoute isAdmin={true}>
                 <UpdateOrder />
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }
           ></Route>
           <Route
             exact
             path="/admin/users"
             element={
-              // <ProtectedRoute isAdmin={true}>
+              <ProtectedRoute isAdmin={true}>
                 <UsersList />
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }
           ></Route>
           <Route
             exact
             path="/admin/user/:id"
             element={
-              // <ProtectedRoute isAdmin={true}>
+            <ProtectedRoute isAdmin={true}>
                 <UpdateUser />
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }
           ></Route>
           <Route
             exact
             path="/admin/reviews/:id"
             element={
-              // <ProtectedRoute isAdmin={true}>
+              <ProtectedRoute isAdmin={true}>
                 <ProductReviews />
-              // </ProtectedRoute>
+              </ProtectedRoute>
             }
           ></Route>
         </Routes>
