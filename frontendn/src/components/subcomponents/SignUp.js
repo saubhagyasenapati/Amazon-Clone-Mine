@@ -54,10 +54,10 @@
 // }
 
 // export default SignUp
-
+import { useNavigate } from "react-router-dom";
 import React,{useState,Fragment} from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { register } from "../../actions/userActions";
@@ -66,6 +66,7 @@ import styled from "styled-components";
 import logo from "../../Assets/logo2.jpg";
 const SignUp = () => {
   const dispatch=useDispatch();
+  const navigate = useNavigate();
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -85,6 +86,7 @@ const SignUp = () => {
     myForm.set("password", password);
     myForm.set("avatar", avatar);
     dispatch(register(myForm));
+    navigate("/")
   };
   const handleChange = (e) => {
     if (e.target.name === "avatar") {

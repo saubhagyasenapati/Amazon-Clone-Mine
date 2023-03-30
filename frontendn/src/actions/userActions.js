@@ -146,7 +146,7 @@ export const updatePassword = (password) => async (dispatch) => {
 export const forgotPassword = (email) => async (dispatch) => {
   try {
     dispatch({ type: FORGOT_PASSWORD_REQUEST });
-    const config = { headers: { "Content-type": "application/json","auth-token":localStorage.getItem('token') } };
+    const config = { headers: { "Content-type": "application/json"} };
     const { data } = await axios.post(
       `${API}/api/auth/password/forgot`,
       email,
@@ -184,7 +184,8 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
 export const getAllUsers = () => async (dispatch) => {
   try {
     dispatch({ type: ALL_USER_REQUEST });
-    const { data } = await axios.get(`${API}/api/auth/admin/users`);
+    const config = { headers: { "Content-type": "application/json","auth-token":localStorage.getItem('token') } };
+    const { data } = await axios.get(`${API}/api/auth/admin/users`,config);
     dispatch({ type: ALL_USER_SUCCESS, payload: data.users });
   } catch (error) {
     dispatch({
