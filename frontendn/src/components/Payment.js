@@ -18,6 +18,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { clearErrors, createOrder } from "../actions/orderAction";
 import { RESET_CART } from "../constants/cartConstant";
+import { API } from "../APIroutes";
 
 const Payment = () => {
   const navigate = useNavigate();
@@ -96,7 +97,7 @@ const Payment = () => {
     } catch (error) {
       payBtn.current.disabled = false;
     }
-  };
+   };
   useEffect(() => {
     if (error) {
       toast(error, {

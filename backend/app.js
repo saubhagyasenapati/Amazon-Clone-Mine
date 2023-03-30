@@ -11,8 +11,8 @@ const errorMiddleware = require("./middleware/error");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
-dotenv.config({ path: "backend/config/config.env" });
-
+dotenv.config({ path: "config/config.env" });
+const path=require("path")
 //Handling Uncaught exception
 process.on("uncaughtException", (err) => {
   console.log(`Error:${err.message}`);
@@ -20,7 +20,8 @@ process.on("uncaughtException", (err) => {
   process.exit(1);
 });
 app.use(cors({
-  origin: '*'
+  origin: '*',
+  credentials: true,
 }));
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(fileUpload());
@@ -34,10 +35,10 @@ app.use("/api/v1", orderRoute);
 app.use("/api/v1", paymentRoute);
 
 
-// app.use(express.static(path.join(___dirname,"../frontend/build")))
-// app.get("*",(req,res)=>{
-//   res.sendFile(path.resolve(__dirname,"../frontend/build/index.html"));
-// })
+app.use(express.static(path.join(__dirname,"../frontendn/build")))
+app.get("*",(req,res)=>{
+  res.sendFile(path.resolve(__dirname,"../frontendn/build/index.html"));
+})
 //MiddleWare for error
 app.use(errorMiddleware);
 app.listen(process.env.PORT, () => {

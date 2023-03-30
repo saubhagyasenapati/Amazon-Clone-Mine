@@ -12,10 +12,10 @@ import ReviewCard from "./subcomponents/ReviewCard";
 import Loader from "./Layout/Loader/Loader";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { addItemsToCart } from "../actions/cartActions";
 import { Rating } from "@mui/material";
 import { REVIEW_ADD_RESET } from "./productConstants";
 import MetaData from "./Layout/MetaData";
+import { addItemsToCart } from "../actions/cartActions";
 
 const ProductDetails = () => {
   const dispatch = useDispatch();
@@ -92,6 +92,7 @@ const ProductDetails = () => {
   };
   const addToCartHandler = () => {
     dispatch(addItemsToCart(id, value));
+   
   };
 
   const options = {
