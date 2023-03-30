@@ -6,39 +6,39 @@ const cloudinary = require("../config/cloudinary");
 
 //Create Product -- Admin
 exports.createProduct = catchAsyncErrors(async (req, res, next) => {
-  req.body.user = req.user.id;
-  const product = await Product.create(req.body);
-  res.status(201).json({
-    success: true,
-    product,
-  });
-
-  // let images = [];
-  // if (typeof req.body.images === "string") {
-  //   images.push(req.body.images);
-  // } else {
-  //   images = req.body.images;
-  // }
-
-  // const imagesLink = [];
-  // for (let i = 0; i < images.length; ++i) {
-  //   const result = await cloudinary.uploader.upload(images[i], {
-  //     folder: "products",
-  //   });
-  //   imagesLink.push({
-  //     public_id: result.public_id,
-  //     url: result.secure_url,
-  //   });
-  // }
-
-  // req.body.images = imagesLink;
   // req.body.user = req.user.id;
-
   // const product = await Product.create(req.body);
   // res.status(201).json({
   //   success: true,
   //   product,
   // });
+
+  let images = [];
+  if (typeof req.body.images === "string") {
+    images.push(req.body.images);
+  } else {
+    images = req.body.images;
+  }
+
+  const imagesLink = [];
+  for (let i = 0; i < images.length; ++i) {
+    const result = await cloudinary.uploader.upload(images[i], {
+      folder: "products",
+    });
+    imagesLink.push({
+      public_id: result.public_id,
+      url: result.secure_url,
+    });
+  }
+
+  req.body.images = imagesLink;
+  req.body.user = req.user.id;
+
+  const product = await Product.create(req.body);
+  res.status(201).json({
+    success: true,
+    product,
+  });
 });
 //GET ALL PRODUCTS ADMIN
 exports.getAdminProducts = catchAsyncErrors(async (req, res) => {
