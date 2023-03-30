@@ -98,9 +98,10 @@ const Payment = () => {
     //   payBtn.current.disabled = false;
     // }
       order.paymentInfo = {
-              id:7788867 ,
+              id:"7788867" ,
               status: "succeeded",
             };
+
             dispatch(createOrder(order));
             localStorage.removeItem("cartItems");
             dispatch({ type: RESET_CART });

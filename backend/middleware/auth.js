@@ -6,13 +6,11 @@ const User = require("../Models/userModel");
 exports.isAuthenticatedUser=catchAsyncError(async(req,res,next)=>{
     //get the user from authtoken and add ID to req object
     const token=req.header('auth-token')
-    console.log(token)
     if(!token){
         return next(new ErrorHandler("Please Login to continue Shopping",401)) 
      }
     try {
         const data=jwt.verify(token,process.env.JWT_SECRET);
-        console.log(data.user.id)
         req.user=await User.findById(data.user.id);
         next()  ;
     } catch (error) {

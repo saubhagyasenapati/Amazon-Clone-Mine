@@ -28,24 +28,22 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     user: req.user._id,
   });
   const user=await User.findById(order.user);
+
   const orderUrl=`${process.env.FRONTEND_URL}/order/${order._id}`;
   const message=`Your order has been placed successfully with us :-\n\nOrder can be viewed at ${orderUrl} \n\nTotal items:${order.orderItems.length}\n\nTotal Amount:${order.totalPrice} `;
-   try{
+  console.log(message);
+ 
        await sendEmail({
            email:user.email,
            subject:"Order Placed Successfully",
            message
        })
-      }
-      catch(error){
-        console.log("Email not sent")
-      }
+       res.status(201).json({
+        success: true,
+          order,})
+    
   
-      
-  res.status(201).json({
-    success: true,
-    order,
-  });
+
 });
 
 
