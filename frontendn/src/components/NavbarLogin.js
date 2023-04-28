@@ -206,4 +206,53 @@ const Section = styled.section`
       }
     }
   }
+
+  @media screen and (max-device-width: 1080px){
+    .logoutbtn {
+    margin-top: 2px;
+    width: 100%;
+    border-radius: 0.3rem;
+    font-size:10px;
+  }
+    .header {
+    padding: 2px;
+    .header_logo {
+      width: 60px;
+      margin: 0 10px;
+      margin-top: 10px;
+    }
+    .header_nav {
+      .header_link {
+        .header_option {
+          margin-left: 5px;
+          margin-right: 5px;
+          .headeroption_lineone {
+            font-size: 7px;
+          }
+          .headeroption_linetwo {
+            font-size: 9px;
+          }
+        }
+        .header_optionBasket {
+          margin-right: 5px;
+          .basketcount {
+            margin-left: 4px;
+            font-size:8px
+          }
+          .cart_img {
+            width: 15px;
+            height: 15px;
+            margin-top:5px;
+          }
+          .headeroption_lineone {
+            font-weight: 800;
+            font-size: 5px;
+            top: 10px;
+          }
+        }
+      }
+    }
+  }
+
+}
 `;

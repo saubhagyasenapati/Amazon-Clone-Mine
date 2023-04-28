@@ -128,4 +128,22 @@ const Section = styled.section`
     flex-wrap: wrap;
     z-index: 1;
   }
+  @media screen and (max-device-width:1080px){
+  .carousel{
+   width:100%;
+   height:300px;
+   .home_image {
+    height: 300px;
+    width: 100%;
+    object-fit:cover;
+  }
+  }
+
+  .home_row {
+    margin: 1vmax auto;
+    width: 100vw;
+    flex-wrap: wrap;
+    z-index: 1;
+  }
+  }
 `;

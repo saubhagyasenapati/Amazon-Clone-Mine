@@ -209,8 +209,8 @@ const ProductDetails = () => {
                 <h1 className="redColor">Out Of Stock</h1>
               ) : (
                 <>
-                  <div class="input-group mb-3">
-                    <label class="input-group-text" for="inputGroupSelect01">
+                  <div className="input-group mb-3">
+                    <label className="input-group-text" for="inputGroupSelect01">
                       quantity
                     </label>
                     <select
@@ -255,7 +255,7 @@ const ProductDetails = () => {
                       rows="7"
                       value={reviewadd}
                     ></textarea>
-                    <button onClick={SubmitReview}>Add Review</button>
+                    <button onClick={SubmitReview} >Add Review</button>
                   </div>
                 </div>
               </div>
@@ -361,6 +361,14 @@ const Section = styled.section`
     height: 500px;
     margin-top: 1rem;
     padding: 1rem;
+    button {
+        margin-top: 10px;
+        width: 100%;
+        background-color: #ff9900;
+        border: 1px solid;
+        border-radius: 0.3rem;
+        border-color: #a88734 #9c7e31 #846a29;
+      }
   }
   .showreview {
     margin-left: 1rem;
@@ -372,4 +380,74 @@ const Section = styled.section`
   hr {
     height: 1rem;
   }
+
+  @media screen and (max-device-width: 1080px){
+   padding:0 ;
+
+    .Product {
+    display: flex;
+   flex-direction:column;
+   .productdetails {
+    width:100vw;
+    padding:1rem;
+    h1{
+      font-size:25px;
+    }
+    h4{
+      font-size:15px;
+    }
+    hr {
+    height: 0.2rem;
+  }
+    .icons {
+    justify-content:center;
+    width:100vw;
+        .icon_each {
+          margin: 6px;
+          img {
+            height: 25px;
+            width: 25px;
+          }
+        }
+      }
+   }
+   .carousel {
+      height: 60%;
+      width: 100vw;
+    }
+    .productimg {
+      height: 300px;
+      width: 100%;
+      object-fit: contain;
+    }
+    .productAdd {
+  position:static;
+  padding:0.5rem 0.3rem;
+  width: 100vw;
+      button {
+        margin-top: 5px;
+       width:100%;
+        border: 1px solid;
+        border-radius: 0.3rem;
+
+      }
+      .redColor {
+        color: red;
+      }
+    }
+  }
+  
+  .reviewsHead {
+    display: flex;
+    flex-direction:column;
+    width:100vw;
+    margin-top: 3rem;
+  }
+  .addreview {
+    border-right: 1px solid;
+    height: 500px;
+    width:100vw;
+    padding: 1rem;
+  }
+}
 `;
